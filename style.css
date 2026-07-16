@@ -404,6 +404,238 @@ a:focus-visible {
   }
 }
 
+/* Judanti bendruomenės iliustracija */
+
+.community-animation-card {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  z-index: 4;
+  width: min(360px, calc(100% - 44px));
+  padding: 14px 18px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.93);
+  box-shadow: 0 18px 38px rgba(24, 56, 44, 0.18);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+  animation: animationCardFloat 6s ease-in-out infinite;
+}
+
+.community-animation {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.community-animation-text {
+  margin: -4px 0 0;
+  color: var(--green-dark);
+  font-size: 0.92rem;
+  font-weight: 850;
+  letter-spacing: 0.015em;
+  text-align: center;
+}
+
+.community-path {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  opacity: 0.85;
+}
+
+.community-path-one {
+  animation: drawCommunityPath 6s ease-in-out infinite;
+}
+
+.community-path-two {
+  animation: drawCommunityPath 6s 0.6s ease-in-out infinite;
+}
+
+.community-path-three {
+  animation: drawCommunityPath 6s 1.2s ease-in-out infinite;
+}
+
+.community-dot {
+  fill: var(--gold);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: communityDotPulse 3s ease-in-out infinite;
+}
+
+.community-dot-two {
+  animation-delay: 0.5s;
+}
+
+.community-dot-three {
+  animation-delay: 1s;
+}
+
+.community-person {
+  fill: var(--green-dark);
+  stroke: var(--green-dark);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: communityPersonAppear 6s ease-in-out infinite;
+}
+
+.community-person-two {
+  animation-delay: 0.5s;
+}
+
+.community-person-three {
+  animation-delay: 1s;
+}
+
+.community-calendar {
+  fill: var(--sand);
+  stroke: var(--green-dark);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: communityIconPop 6s 1.3s ease-in-out infinite;
+}
+
+.community-calendar text {
+  fill: var(--green-dark);
+  stroke: none;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.community-location {
+  fill: var(--gold);
+  stroke: var(--green-dark);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: communityIconPop 6s 1.8s ease-in-out infinite;
+}
+
+.community-location circle {
+  fill: var(--white);
+}
+
+.community-heart {
+  fill: var(--gold);
+  stroke: var(--green-dark);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: communityHeartBeat 3s ease-in-out infinite;
+}
+
+@keyframes animationCardFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes drawCommunityPath {
+  0% {
+    stroke-dashoffset: 220;
+    opacity: 0.2;
+  }
+
+  25%,
+  75% {
+    stroke-dashoffset: 0;
+    opacity: 0.95;
+  }
+
+  100% {
+    stroke-dashoffset: -220;
+    opacity: 0.2;
+  }
+}
+
+@keyframes communityDotPulse {
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.65;
+  }
+
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+@keyframes communityPersonAppear {
+  0%,
+  12% {
+    transform: translateY(8px) scale(0.86);
+    opacity: 0;
+  }
+
+  28%,
+  78% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-3px) scale(0.96);
+    opacity: 0.6;
+  }
+}
+
+@keyframes communityIconPop {
+  0%,
+  22% {
+    transform: scale(0.65);
+    opacity: 0;
+  }
+
+  40%,
+  78% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 0.55;
+  }
+}
+
+@keyframes communityHeartBeat {
+  0%,
+  100% {
+    transform: translateY(0) scale(0.9);
+  }
+
+  40% {
+    transform: translateY(-4px) scale(1.08);
+  }
+
+  55% {
+    transform: translateY(-2px) scale(0.98);
+  }
+
+  70% {
+    transform: translateY(-4px) scale(1.05);
+  }
+}
+
+/* Artimiausio renginio kortelė */
+
 .featured-event-card {
   display: flex;
   align-items: center;
@@ -485,8 +717,7 @@ a:focus-visible {
 }
 
 .content-card .card-link {
-  margin-top: auto;
-  padding-top: 22px;
+  margin-top: 14px;
 }
 
 .status-badge,
@@ -508,6 +739,24 @@ a:focus-visible {
 .category-label {
   background: var(--sand);
   color: #765b27;
+}
+
+/* BagažinTurgio skelbimas renginio kortelėje */
+
+.event-poster-button {
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  background: var(--white);
+}
+
+.event-poster-image {
+  width: 100%;
+  height: 320px;
+  border-radius: 16px;
+  background: var(--white);
+  object-fit: contain;
+  object-position: center top;
 }
 
 /* Kalendoriaus peržiūra */
@@ -559,7 +808,14 @@ a:focus-visible {
   border: 2px dashed rgba(35, 77, 60, 0.22);
   background: var(--sand-light);
   color: var(--text-light);
-  text-align: center;
+}
+
+.calendar-placeholder p {
+  margin: 0 0 20px;
+}
+
+.calendar-placeholder p:last-child {
+  margin-bottom: 0;
 }
 
 /* Apie bendruomenę */
@@ -755,6 +1011,10 @@ a:focus-visible {
 
 .gallery-item:hover img {
   transform: scale(1.04);
+}
+
+.event-poster-button:hover .event-poster-image {
+  transform: scale(1.015);
 }
 
 /* Dokumentai */
@@ -988,6 +1248,10 @@ a:focus-visible {
   .gallery-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .community-animation-card {
+    width: min(320px, calc(100% - 36px));
+  }
 }
 
 /* Telefonai */
@@ -1066,6 +1330,24 @@ a:focus-visible {
     height: 105px;
   }
 
+  .community-animation-card {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px 14px;
+    animation: none;
+  }
+
+  .community-animation {
+    max-height: 160px;
+  }
+
+  .community-animation-text {
+    font-size: 0.9rem;
+  }
+
   .featured-event-card {
     align-items: flex-start;
     flex-direction: column;
@@ -1117,6 +1399,12 @@ a:focus-visible {
     height: 330px;
   }
 
+  .event-poster-image {
+    height: auto !important;
+    max-height: 520px;
+    object-fit: contain !important;
+  }
+
   .document-item {
     align-items: flex-start;
     flex-direction: column;
@@ -1162,5 +1450,18 @@ a:focus-visible {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .community-path {
+    stroke-dashoffset: 0;
+  }
+
+  .community-person,
+  .community-calendar,
+  .community-location,
+  .community-heart,
+  .community-dot {
+    opacity: 1;
+    transform: none;
   }
 }
