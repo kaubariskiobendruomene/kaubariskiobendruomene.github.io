@@ -1,279 +1,578 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const emailAddress = "kaubariskiobendruomene@gmail.com";
+'use strict';
 
-  const readingProgress = document.getElementById("reading-progress");
-  const backToTopButton = document.getElementById("back-to-top");
-  const mobileMenuButton = document.getElementById("mobile-menu-button");
-  const mainNavigation = document.getElementById("main-navigation");
-  const copyEmailButton = document.getElementById("copy-email-button");
-  const copyConfirmation = document.getElementById("copy-confirmation");
-  const currentDateElement = document.getElementById("current-date");
-  const currentTimeElement = document.getElementById("current-time");
-  const currentYearElement = document.getElementById("current-year");
+/* =========================================================
+   KAUBARIŠKIO BENDRUOMENĖS SVETAINĖ
+   ========================================================= */
 
-  const lightbox = document.getElementById("image-lightbox");
-  const lightboxImage = document.getElementById("lightbox-image");
-  const closeLightboxButton = document.getElementById("close-lightbox");
-  const galleryItems = document.querySelectorAll(".gallery-item");
+document.addEventListener('DOMContentLoaded', () => {
+  nustatytiMetus();
+  paleistiLietuvosLaikrodi();
+  paleistiSkaitymoProgresa();
+  paleistiGrizimoIVirsuMygtuka();
+  paleistiMobilujiMeniu();
+  paleistiElPastoKopijavima();
+  paleistiNuotraukuGalerija();
+  paleistiRegistracijosForma();
+  sutvarkytiTusciasNuorodas();
+});
 
-  /*
-   * Lietuvos data ir laikas
-   * Laiko juosta automatiškai prisitaiko prie vasaros ir žiemos laiko.
-   */
 
-  function updateLithuanianDateAndTime() {
-    const now = new Date();
+/* =========================================================
+   METAI PORAŠTĖJE
+   ========================================================= */
 
-    const dateFormatter = new Intl.DateTimeFormat("lt-LT", {
-      timeZone: "Europe/Vilnius",
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+function nustatytiMetus() {
+  const metuElementas = document.getElementById('current-year');
 
-    const timeFormatter = new Intl.DateTimeFormat("lt-LT", {
-      timeZone: "Europe/Vilnius",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-
-    if (currentDateElement) {
-      const formattedDate = dateFormatter.format(now);
-      currentDateElement.textContent =
-        formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
-    }
-
-    if (currentTimeElement) {
-      currentTimeElement.textContent = timeFormatter.format(now);
-    }
+  if (!metuElementas) {
+    return;
   }
 
-  updateLithuanianDateAndTime();
-  window.setInterval(updateLithuanianDateAndTime, 1000);
+  metuElementas.textContent = String(new Date().getFullYear());
+}
 
-  /*
-   * Automatiškai rodomi einamieji metai poraštėje
-   */
 
-  if (currentYearElement) {
-    const yearFormatter = new Intl.DateTimeFormat("lt-LT", {
-      timeZone: "Europe/Vilnius",
-      year: "numeric",
-    });
+/* =========================================================
+   LIETUVOS DATA IR LAIKAS
+   ========================================================= */
 
-    currentYearElement.textContent = yearFormatter.format(new Date());
+function paleistiLietuvosLaikrodi() {
+  const datosElementas = document.getElementById('current-date');
+  const laikoElementas = document.getElementById('current-time');
+
+  if (!datosElementas || !laikoElementas) {
+    return;
   }
 
-  /*
-   * Skaitymo progreso juosta ir mygtukas „Grįžti į viršų“
-   */
+  const atnaujintiLaika = () => {
+    const dabar = new Date();
 
-  function updateScrollFeatures() {
-    const scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
+    const data = new Intl.DateTimeFormat('lt-LT', {
+      timeZone: 'Europe/Vilnius',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long'
+    }).format(dabar);
 
-    const scrollHeight =
+    const laikas = new Intl.DateTimeFormat('lt-LT', {
+      timeZone: 'Europe/Vilnius',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    }).format(dabar);
+
+    datosElementas.textContent =
+      data.charAt(0).toUpperCase() + data.slice(1);
+
+    laikoElementas.textContent = laikas;
+  };
+
+  atnaujintiLaika();
+
+  window.setInterval(atnaujintiLaika, 1000);
+}
+
+
+/* =========================================================
+   SKAITYMO PROGRESO JUOSTA
+   ========================================================= */
+
+function paleistiSkaitymoProgresa() {
+  const progresoJuosta =
+    document.getElementById('reading-progress');
+
+  if (!progresoJuosta) {
+    return;
+  }
+
+  const atnaujintiProgresa = () => {
+    const dokumentoAukstis =
       document.documentElement.scrollHeight -
       document.documentElement.clientHeight;
 
-    const progress =
-      scrollHeight > 0 ? Math.min((scrollTop / scrollHeight) * 100, 100) : 0;
+    const paslinkta = window.scrollY;
 
-    if (readingProgress) {
-      readingProgress.style.width = `${progress}%`;
-    }
+    const procentai =
+      dokumentoAukstis > 0
+        ? Math.min(
+            100,
+            Math.max(0, (paslinkta / dokumentoAukstis) * 100)
+          )
+        : 0;
 
-    if (backToTopButton) {
-      backToTopButton.classList.toggle("is-visible", scrollTop > 500);
-    }
-  }
+    progresoJuosta.style.width = `${procentai}%`;
+  };
 
-  window.addEventListener("scroll", updateScrollFeatures, {
-    passive: true,
+  atnaujintiProgresa();
+
+  window.addEventListener('scroll', atnaujintiProgresa, {
+    passive: true
   });
 
-  updateScrollFeatures();
+  window.addEventListener('resize', atnaujintiProgresa);
+}
 
-  if (backToTopButton) {
-    backToTopButton.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    });
+
+/* =========================================================
+   GRĮŽIMO Į VIRŠŲ MYGTUKAS
+   ========================================================= */
+
+function paleistiGrizimoIVirsuMygtuka() {
+  const mygtukas = document.getElementById('back-to-top');
+
+  if (!mygtukas) {
+    return;
   }
 
-  /*
-   * Telefono meniu
-   */
+  const atnaujintiMygtuka = () => {
+    mygtukas.classList.toggle(
+      'is-visible',
+      window.scrollY > 550
+    );
+  };
 
-  function closeMobileMenu() {
-    if (!mainNavigation || !mobileMenuButton) {
-      return;
+  atnaujintiMygtuka();
+
+  window.addEventListener('scroll', atnaujintiMygtuka, {
+    passive: true
+  });
+
+  mygtukas.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+
+/* =========================================================
+   MOBILUSIS MENIU
+   ========================================================= */
+
+function paleistiMobilujiMeniu() {
+  const meniuMygtukas =
+    document.getElementById('mobile-menu-button');
+
+  const navigacija =
+    document.getElementById('main-navigation');
+
+  if (!meniuMygtukas || !navigacija) {
+    return;
+  }
+
+  const uzdarytiMeniu = () => {
+    navigacija.classList.remove('is-open');
+    meniuMygtukas.setAttribute('aria-expanded', 'false');
+    meniuMygtukas.textContent = '☰';
+    meniuMygtukas.setAttribute(
+      'aria-label',
+      'Atidaryti meniu'
+    );
+  };
+
+  const atidarytiMeniu = () => {
+    navigacija.classList.add('is-open');
+    meniuMygtukas.setAttribute('aria-expanded', 'true');
+    meniuMygtukas.textContent = '×';
+    meniuMygtukas.setAttribute(
+      'aria-label',
+      'Uždaryti meniu'
+    );
+  };
+
+  meniuMygtukas.addEventListener('click', () => {
+    const meniuAtidarytas =
+      navigacija.classList.contains('is-open');
+
+    if (meniuAtidarytas) {
+      uzdarytiMeniu();
+    } else {
+      atidarytiMeniu();
     }
+  });
 
-    mainNavigation.classList.remove("is-open");
-    mobileMenuButton.setAttribute("aria-expanded", "false");
-    mobileMenuButton.setAttribute("aria-label", "Atidaryti meniu");
-    mobileMenuButton.textContent = "☰";
+  navigacija.querySelectorAll('a').forEach((nuoroda) => {
+    nuoroda.addEventListener('click', uzdarytiMeniu);
+  });
+
+  document.addEventListener('click', (ivykis) => {
+    const paspaustaMeniuViduje =
+      navigacija.contains(ivykis.target);
+
+    const paspaustasMeniuMygtukas =
+      meniuMygtukas.contains(ivykis.target);
+
+    if (
+      !paspaustaMeniuViduje &&
+      !paspaustasMeniuMygtukas
+    ) {
+      uzdarytiMeniu();
+    }
+  });
+
+  document.addEventListener('keydown', (ivykis) => {
+    if (ivykis.key === 'Escape') {
+      uzdarytiMeniu();
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1120) {
+      uzdarytiMeniu();
+    }
+  });
+}
+
+
+/* =========================================================
+   EL. PAŠTO KOPIJAVIMAS
+   ========================================================= */
+
+function paleistiElPastoKopijavima() {
+  const kopijavimoMygtukas =
+    document.getElementById('copy-email-button');
+
+  const patvirtinimoElementas =
+    document.getElementById('copy-confirmation');
+
+  if (!kopijavimoMygtukas) {
+    return;
   }
 
-  if (mobileMenuButton && mainNavigation) {
-    mobileMenuButton.addEventListener("click", () => {
-      const isOpen = mainNavigation.classList.toggle("is-open");
+  const elPastas =
+    'kaubariskiobendruomene@gmail.com';
 
-      mobileMenuButton.setAttribute(
-        "aria-expanded",
-        isOpen ? "true" : "false"
-      );
+  kopijavimoMygtukas.addEventListener(
+    'click',
+    async () => {
+      try {
+        await nukopijuotiTeksta(elPastas);
 
-      mobileMenuButton.setAttribute(
-        "aria-label",
-        isOpen ? "Uždaryti meniu" : "Atidaryti meniu"
-      );
-
-      mobileMenuButton.textContent = isOpen ? "×" : "☰";
-    });
-
-    mainNavigation.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", closeMobileMenu);
-    });
-
-    document.addEventListener("click", (event) => {
-      const clickedInsideNavigation = mainNavigation.contains(event.target);
-      const clickedMenuButton = mobileMenuButton.contains(event.target);
-
-      if (!clickedInsideNavigation && !clickedMenuButton) {
-        closeMobileMenu();
-      }
-    });
-  }
-
-  /*
-   * El. pašto kopijavimo mygtukas
-   */
-
-  async function copyEmailAddress() {
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(emailAddress);
-      } else {
-        const temporaryInput = document.createElement("textarea");
-
-        temporaryInput.value = emailAddress;
-        temporaryInput.setAttribute("readonly", "");
-        temporaryInput.style.position = "fixed";
-        temporaryInput.style.opacity = "0";
-
-        document.body.appendChild(temporaryInput);
-        temporaryInput.select();
-
-        const copied = document.execCommand("copy");
-        temporaryInput.remove();
-
-        if (!copied) {
-          throw new Error("Nepavyko nukopijuoti");
+        if (patvirtinimoElementas) {
+          patvirtinimoElementas.textContent =
+            'El. pašto adresas nukopijuotas.';
         }
-      }
+      } catch (klaida) {
+        console.error(
+          'Nepavyko nukopijuoti el. pašto:',
+          klaida
+        );
 
-      if (copyConfirmation) {
-        copyConfirmation.textContent = "El. pašto adresas nukopijuotas";
-      }
-
-      if (copyEmailButton) {
-        copyEmailButton.textContent = "Nukopijuota ✓";
+        if (patvirtinimoElementas) {
+          patvirtinimoElementas.textContent =
+            `El. paštas: ${elPastas}`;
+        }
       }
 
       window.setTimeout(() => {
-        if (copyConfirmation) {
-          copyConfirmation.textContent = "";
+        if (patvirtinimoElementas) {
+          patvirtinimoElementas.textContent = '';
         }
-
-        if (copyEmailButton) {
-          copyEmailButton.textContent = "Kopijuoti el. paštą";
-        }
-      }, 3000);
-    } catch (error) {
-      if (copyConfirmation) {
-        copyConfirmation.textContent =
-          "Nepavyko nukopijuoti. Pažymėkite adresą rankiniu būdu.";
-      }
+      }, 4000);
     }
+  );
+}
+
+async function nukopijuotiTeksta(tekstas) {
+  if (
+    navigator.clipboard &&
+    window.isSecureContext
+  ) {
+    await navigator.clipboard.writeText(tekstas);
+    return;
   }
 
-  if (copyEmailButton) {
-    copyEmailButton.addEventListener("click", copyEmailAddress);
+  const laikinasLaukas =
+    document.createElement('textarea');
+
+  laikinasLaukas.value = tekstas;
+  laikinasLaukas.setAttribute('readonly', '');
+  laikinasLaukas.style.position = 'fixed';
+  laikinasLaukas.style.left = '-9999px';
+
+  document.body.appendChild(laikinasLaukas);
+
+  laikinasLaukas.select();
+  laikinasLaukas.setSelectionRange(
+    0,
+    laikinasLaukas.value.length
+  );
+
+  const pavyko =
+    document.execCommand('copy');
+
+  laikinasLaukas.remove();
+
+  if (!pavyko) {
+    throw new Error('Kopijavimo funkcija nepasiekiama.');
+  }
+}
+
+
+/* =========================================================
+   NUOTRAUKŲ GALERIJA
+   ========================================================= */
+
+function paleistiNuotraukuGalerija() {
+  const galerijosElementai =
+    document.querySelectorAll('.gallery-item img');
+
+  const langas =
+    document.getElementById('image-lightbox');
+
+  const padidintaNuotrauka =
+    document.getElementById('lightbox-image');
+
+  const uzdarymoMygtukas =
+    document.getElementById('close-lightbox');
+
+  if (
+    galerijosElementai.length === 0 ||
+    !langas ||
+    !padidintaNuotrauka ||
+    !uzdarymoMygtukas
+  ) {
+    return;
   }
 
-  /*
-   * Galerijos nuotraukų atidarymas didesniame lange
-   */
+  let ankstesnisFokusoElementas = null;
 
-  function openLightbox(image) {
-    if (!lightbox || !lightboxImage || !image) {
+  const atidarytiNuotrauka = (nuotrauka) => {
+    ankstesnisFokusoElementas =
+      document.activeElement;
+
+    padidintaNuotrauka.src =
+      nuotrauka.currentSrc || nuotrauka.src;
+
+    padidintaNuotrauka.alt =
+      nuotrauka.alt || 'Padidinta nuotrauka';
+
+    langas.hidden = false;
+    document.body.style.overflow = 'hidden';
+
+    uzdarymoMygtukas.focus();
+  };
+
+  const uzdarytiNuotrauka = () => {
+    langas.hidden = true;
+    document.body.style.overflow = '';
+
+    padidintaNuotrauka.src = '';
+    padidintaNuotrauka.alt = '';
+
+    if (
+      ankstesnisFokusoElementas &&
+      typeof ankstesnisFokusoElementas.focus ===
+        'function'
+    ) {
+      ankstesnisFokusoElementas.focus();
+    }
+  };
+
+  galerijosElementai.forEach((nuotrauka) => {
+    const mygtukas =
+      nuotrauka.closest('.gallery-item');
+
+    if (!mygtukas) {
       return;
     }
 
-    lightboxImage.src = image.src;
-    lightboxImage.alt = image.alt;
-    lightbox.hidden = false;
+    mygtukas.addEventListener('click', () => {
+      atidarytiNuotrauka(nuotrauka);
+    });
+  });
 
-    document.body.style.overflow = "hidden";
+  uzdarymoMygtukas.addEventListener(
+    'click',
+    uzdarytiNuotrauka
+  );
 
-    if (closeLightboxButton) {
-      closeLightboxButton.focus();
+  langas.addEventListener('click', (ivykis) => {
+    if (ivykis.target === langas) {
+      uzdarytiNuotrauka();
     }
+  });
+
+  document.addEventListener('keydown', (ivykis) => {
+    if (
+      ivykis.key === 'Escape' &&
+      !langas.hidden
+    ) {
+      uzdarytiNuotrauka();
+    }
+  });
+}
+
+
+/* =========================================================
+   BAGAŽINTURGIO REGISTRACIJOS FORMA
+   ========================================================= */
+
+function paleistiRegistracijosForma() {
+  const forma =
+    document.getElementById(
+      'bagazinturgio-registration-form'
+    );
+
+  const atsakymoLangas =
+    document.getElementById(
+      'registration-response-frame'
+    );
+
+  const pateikimoMygtukas =
+    document.getElementById(
+      'registration-submit-button'
+    );
+
+  const zinutesElementas =
+    document.getElementById(
+      'registration-form-message'
+    );
+
+  if (
+    !forma ||
+    !atsakymoLangas ||
+    !pateikimoMygtukas ||
+    !zinutesElementas
+  ) {
+    return;
   }
 
-  function closeLightbox() {
-    if (!lightbox || !lightboxImage) {
+  let siuntimasVyksta = false;
+  let laukimoLaikmatis = null;
+
+  const pradinisMygtukoTekstas =
+    pateikimoMygtukas.textContent.trim();
+
+  const rodytiZinute = (tekstas, busena) => {
+    zinutesElementas.textContent = tekstas;
+
+    zinutesElementas.classList.remove(
+      'is-loading',
+      'is-success',
+      'is-error'
+    );
+
+    if (busena) {
+      zinutesElementas.classList.add(busena);
+    }
+  };
+
+  const ijungtiMygtuka = () => {
+    pateikimoMygtukas.disabled = false;
+    pateikimoMygtukas.textContent =
+      pradinisMygtukoTekstas;
+  };
+
+  const isjungtiMygtuka = () => {
+    pateikimoMygtukas.disabled = true;
+    pateikimoMygtukas.textContent =
+      'Registracija siunčiama…';
+  };
+
+  forma.addEventListener('submit', (ivykis) => {
+    if (siuntimasVyksta) {
+      ivykis.preventDefault();
       return;
     }
 
-    lightbox.hidden = true;
-    lightboxImage.src = "";
-    lightboxImage.alt = "";
+    if (!forma.checkValidity()) {
+      return;
+    }
 
-    document.body.style.overflow = "";
-  }
+    if (!navigator.onLine) {
+      ivykis.preventDefault();
 
-  galleryItems.forEach((item) => {
-    const image = item.querySelector("img");
+      rodytiZinute(
+        'Nėra interneto ryšio. Patikrinkite ryšį ir bandykite dar kartą.',
+        'is-error'
+      );
 
-    item.addEventListener("click", () => {
-      openLightbox(image);
+      return;
+    }
+
+    siuntimasVyksta = true;
+
+    isjungtiMygtuka();
+
+    rodytiZinute(
+      'Registracija siunčiama. Prašome palaukti…',
+      'is-loading'
+    );
+
+    laukimoLaikmatis = window.setTimeout(() => {
+      if (!siuntimasVyksta) {
+        return;
+      }
+
+      siuntimasVyksta = false;
+
+      ijungtiMygtuka();
+
+      rodytiZinute(
+        'Atsakymo iš registracijos sistemos negauta. Patikrinkite interneto ryšį ir pabandykite dar kartą.',
+        'is-error'
+      );
+    }, 30000);
+  });
+
+  atsakymoLangas.addEventListener('load', () => {
+    /*
+     * Iframe įkeliamas ir atidarius puslapį.
+     * Todėl patvirtinimą rodome tik tada,
+     * kai tikrai buvo pradėtas formos siuntimas.
+     */
+    if (!siuntimasVyksta) {
+      return;
+    }
+
+    siuntimasVyksta = false;
+
+    if (laukimoLaikmatis) {
+      window.clearTimeout(laukimoLaikmatis);
+      laukimoLaikmatis = null;
+    }
+
+    ijungtiMygtuka();
+
+    forma.reset();
+
+    rodytiZinute(
+      'Registracija sėkmingai pateikta. Duomenys perduoti renginio organizatorei.',
+      'is-success'
+    );
+
+    zinutesElementas.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
     });
   });
 
-  if (closeLightboxButton) {
-    closeLightboxButton.addEventListener("click", closeLightbox);
-  }
-
-  if (lightbox) {
-    lightbox.addEventListener("click", (event) => {
-      if (event.target === lightbox) {
-        closeLightbox();
-      }
-    });
-  }
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeLightbox();
-      closeMobileMenu();
+  forma.addEventListener('input', () => {
+    if (
+      zinutesElementas.classList.contains(
+        'is-error'
+      )
+    ) {
+      rodytiZinute('', '');
     }
   });
+}
 
-  /*
-   * Pavyzdinės nuorodos su „#“ kol kas niekur neveda.
-   * Neleidžiame joms perkelti puslapio į patį viršų.
-   */
 
-  document.querySelectorAll('a[href="#"]').forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
+/* =========================================================
+   TUŠČIOS PAVYZDINĖS NUORODOS
+   ========================================================= */
+
+function sutvarkytiTusciasNuorodas() {
+  const tusciosNuorodos =
+    document.querySelectorAll('a[href="#"]');
+
+  tusciosNuorodos.forEach((nuoroda) => {
+    nuoroda.addEventListener('click', (ivykis) => {
+      ivykis.preventDefault();
     });
   });
-});
+}
