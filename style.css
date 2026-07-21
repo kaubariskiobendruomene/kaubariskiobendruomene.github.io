@@ -841,6 +841,13 @@ textarea:focus-visible {
   background: var(--white);
 }
 
+.event-poster-button-tall {
+  display: block;
+  width: min(100%, 340px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /* Registracijos skiltis */
 
 .registration-section {
@@ -1356,6 +1363,10 @@ textarea:focus-visible {
   object-position: center top;
 }
 
+.event-poster-button-tall .event-poster-image {
+  height: 430px;
+}
+
 .event-poster-button:hover .event-poster-image {
   transform: scale(1.015);
 }
@@ -1859,6 +1870,16 @@ textarea:focus-visible {
     height: auto;
     max-height: 520px;
     object-fit: contain;
+  }
+
+  .event-poster-button-tall {
+    width: calc(100% + 56px);
+    margin-right: -28px;
+    margin-left: -28px;
+  }
+
+  .event-poster-button-tall .event-poster-image {
+    max-height: none;
   }
 
   .document-item {
