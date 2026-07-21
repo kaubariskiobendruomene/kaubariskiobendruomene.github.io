@@ -781,6 +781,31 @@ textarea:focus-visible {
   margin-top: 14px;
 }
 
+.place-profile {
+  display: grid;
+  align-items: center;
+  gap: 32px;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.05fr);
+}
+
+.place-photo {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid rgba(35, 77, 60, 0.1);
+  border-radius: var(--radius-medium);
+  background: var(--white);
+  box-shadow: var(--shadow-small);
+}
+
+.place-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 960 / 893;
+  object-fit: cover;
+  object-position: center center;
+}
+
 .status-badge,
 .category-label {
   display: inline-flex;
@@ -1772,6 +1797,7 @@ textarea:focus-visible {
 
   .three-columns,
   .calendar-preview,
+  .place-profile,
   .about-grid,
   .contact-card,
   .footer-grid {
@@ -1801,6 +1827,10 @@ textarea:focus-visible {
 
   .about-grid {
     gap: 35px;
+  }
+
+  .place-profile {
+    gap: 22px;
   }
 
   .about-logo-wrapper {
