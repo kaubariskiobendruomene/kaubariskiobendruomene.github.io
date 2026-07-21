@@ -52,27 +52,125 @@
         aria-expanded="false"
         aria-controls="main-navigation"
       >
-        ☰
+        <span aria-hidden="true">☰</span>
+        <span>MENIU</span>
       </button>
 
-      <nav id="main-navigation" class="main-navigation">
-        <a href="#pagrindinis">Pagrindinis</a>
-        <a href="#renginiai">Renginiai</a>
-        <a href="#naujienos">Naujienos</a>
-        <a href="#kalendorius">Kalendorius</a>
-        <a href="#galerija">Galerija</a>
-        <a href="#atsiliepimai">Atsiliepimai</a>
-        <a href="#dokumentai">Dokumentai</a>
-        <a href="#apie-mus">Apie mus</a>
-        <a href="#naryste">Narystė</a>
+      <nav
+        id="main-navigation"
+        class="main-navigation"
+        aria-label="Pagrindinė navigacija"
+      >
+        <div class="mobile-drawer-header">
+          <span>Meniu</span>
 
-        <a href="#kontaktai" class="nav-contact-button">
-          Kontaktai
-        </a>
+          <button
+            class="mobile-menu-close"
+            id="mobile-menu-close"
+            type="button"
+            aria-label="Uždaryti meniu"
+          >
+            ×
+          </button>
+        </div>
+
+        <a href="#pagrindinis" class="nav-link">Pagrindinis</a>
+
+        <div class="nav-group">
+          <button
+            class="nav-group-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="nav-apie"
+          >
+            Apie
+            <span aria-hidden="true">▾</span>
+          </button>
+
+          <div
+            id="nav-apie"
+            class="nav-submenu"
+          >
+            <a href="#apie-mus">Apie bendruomenę</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button
+            class="nav-group-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="nav-renginiai"
+          >
+            Renginiai ir naujienos
+            <span aria-hidden="true">▾</span>
+          </button>
+
+          <div
+            id="nav-renginiai"
+            class="nav-submenu"
+          >
+            <a href="#artimiausi-renginiai">Artimiausi renginiai</a>
+            <a href="#naujienos">Naujienos ir skelbimai</a>
+            <a href="#kalendorius">Kalendorius</a>
+            <a href="#galerija">Galerija</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button
+            class="nav-group-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="nav-prisidek"
+          >
+            Prisidėk
+            <span aria-hidden="true">▾</span>
+          </button>
+
+          <div
+            id="nav-prisidek"
+            class="nav-submenu"
+          >
+            <a href="#naryste">Narystė</a>
+            <a href="#parama">Parama</a>
+            <a href="#atsiliepimai">Atsiliepimai ir pasiūlymai</a>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <button
+            class="nav-group-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="nav-informacija"
+          >
+            Informacija
+            <span aria-hidden="true">▾</span>
+          </button>
+
+          <div
+            id="nav-informacija"
+            class="nav-submenu"
+          >
+            <a href="#dokumentai">Dokumentai</a>
+            <a href="#kontaktai">Kontaktai</a>
+          </div>
+        </div>
       </nav>
 
     </div>
   </header>
+
+  <div
+    class="mobile-menu-overlay"
+    id="mobile-menu-overlay"
+    hidden
+  ></div>
 
   <main>
 
@@ -225,7 +323,10 @@
 
       <div class="container">
 
-        <article class="featured-event-card">
+        <article
+          id="artimiausi-renginiai"
+          class="featured-event-card"
+        >
 
           <div>
 

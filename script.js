@@ -107,13 +107,57 @@ function paleistiSlinkimoElementus() {
 function paleistiMobilujiMeniu() {
   const mygtukas = pagalId('mobile-menu-button');
   const navigacija = pagalId('main-navigation');
+  const uzdanga = pagalId('mobile-menu-overlay');
+  const uzdarymoMygtukas = pagalId('mobile-menu-close');
 
-  if (!mygtukas || !navigacija) {
+  if (!mygtukas || !navigacija || !uzdanga || !uzdarymoMygtukas) {
     return;
   }
 
-  const uzdaryti = () => {
+  const grupes = Array.from(
+    navigacija.querySelectorAll('.nav-group')
+  );
+
+  const uzdarytiGrupes = () => {
+    grupes.forEach((grupe) => {
+      grupe.classList.remove('is-open');
+
+      const grupesMygtukas =
+        grupe.querySelector('.nav-group-toggle');
+
+      if (grupesMygtukas) {
+        grupesMygtukas.setAttribute(
+          'aria-expanded',
+          'false'
+        );
+      }
+    });
+  };
+
+  const atidarytiGrupe = (aktyviGrupe) => {
+    grupes.forEach((grupe) => {
+      const atidaryta = grupe === aktyviGrupe;
+
+      grupe.classList.toggle('is-open', atidaryta);
+
+      const grupesMygtukas =
+        grupe.querySelector('.nav-group-toggle');
+
+      if (grupesMygtukas) {
+        grupesMygtukas.setAttribute(
+          'aria-expanded',
+          String(atidaryta)
+        );
+      }
+    });
+  };
+
+  const uzdarytiMeniu = (grazintiFokusa = false) => {
     navigacija.classList.remove('is-open');
+    uzdanga.classList.remove('is-open');
+    uzdanga.hidden = true;
+    document.body.classList.remove('menu-open');
+    uzdarytiGrupes();
 
     mygtukas.setAttribute(
       'aria-expanded',
@@ -125,31 +169,117 @@ function paleistiMobilujiMeniu() {
       'Atidaryti meniu'
     );
 
-    mygtukas.textContent = '☰';
+    if (grazintiFokusa) {
+      window.setTimeout(() => {
+        mygtukas.focus({
+          preventScroll: true
+        });
+      }, 0);
+    }
   };
 
-  mygtukas.addEventListener('click', () => {
-    const atidarytas =
-      navigacija.classList.toggle('is-open');
+  const atidarytiMeniu = () => {
+    uzdanga.hidden = false;
+    navigacija.classList.add('is-open');
+    uzdanga.classList.add('is-open');
+    document.body.classList.add('menu-open');
 
     mygtukas.setAttribute(
       'aria-expanded',
-      String(atidarytas)
+      'true'
     );
 
     mygtukas.setAttribute(
       'aria-label',
-      atidarytas
-        ? 'Uždaryti meniu'
-        : 'Atidaryti meniu'
+      'Uždaryti meniu'
     );
+  };
 
-    mygtukas.textContent =
-      atidarytas ? '×' : '☰';
+  mygtukas.addEventListener('click', () => {
+    const atidarytas =
+      navigacija.classList.contains('is-open');
+
+    if (atidarytas) {
+      uzdarytiMeniu(true);
+    } else {
+      atidarytiMeniu();
+    }
+  });
+
+  uzdarymoMygtukas.addEventListener('click', () => {
+    uzdarytiMeniu(true);
+  });
+
+  uzdanga.addEventListener('click', () => {
+    uzdarytiMeniu(true);
+  });
+
+  grupes.forEach((grupe) => {
+    const grupesMygtukas =
+      grupe.querySelector('.nav-group-toggle');
+
+    if (!grupesMygtukas) {
+      return;
+    }
+
+    grupesMygtukas.addEventListener('pointerdown', () => {
+      grupesMygtukas.dataset.pelesPaspaudimas = 'true';
+    });
+
+    grupesMygtukas.addEventListener('click', () => {
+      const atidaryta =
+        grupe.classList.contains('is-open');
+
+      if (atidaryta) {
+        grupe.classList.remove('is-open');
+
+        grupesMygtukas.setAttribute(
+          'aria-expanded',
+          'false'
+        );
+      } else {
+        atidarytiGrupe(grupe);
+      }
+    });
+
+    grupe.addEventListener('focusin', (ivykis) => {
+      if (
+        ivykis.target === grupesMygtukas &&
+        (
+          grupesMygtukas.dataset.neatidaryti === 'true' ||
+          grupesMygtukas.dataset.pelesPaspaudimas === 'true'
+        )
+      ) {
+        delete grupesMygtukas.dataset.neatidaryti;
+        delete grupesMygtukas.dataset.pelesPaspaudimas;
+        return;
+      }
+
+      atidarytiGrupe(grupe);
+    });
+
+    grupe.addEventListener('focusout', () => {
+      window.setTimeout(() => {
+        if (!grupe.contains(document.activeElement)) {
+          grupe.classList.remove('is-open');
+
+          grupesMygtukas.setAttribute(
+            'aria-expanded',
+            'false'
+          );
+        }
+      }, 0);
+    });
   });
 
   navigacija.querySelectorAll('a').forEach((nuoroda) => {
-    nuoroda.addEventListener('click', uzdaryti);
+    nuoroda.addEventListener('click', () => {
+      if (navigacija.classList.contains('is-open')) {
+        uzdarytiMeniu(true);
+      } else {
+        uzdarytiGrupes();
+      }
+    });
   });
 
   document.addEventListener('click', (ivykis) => {
@@ -160,13 +290,38 @@ function paleistiMobilujiMeniu() {
       mygtukas.contains(ivykis.target);
 
     if (!meniuViduje && !mygtukoViduje) {
-      uzdaryti();
+      if (navigacija.classList.contains('is-open')) {
+        uzdarytiMeniu(true);
+      } else {
+        uzdarytiGrupes();
+      }
     }
   });
 
   document.addEventListener('keydown', (ivykis) => {
     if (ivykis.key === 'Escape') {
-      uzdaryti();
+      const aktyviGrupe = grupes.find((grupe) =>
+        grupe.contains(document.activeElement)
+      );
+
+      if (aktyviGrupe) {
+        const grupesMygtukas =
+          aktyviGrupe.querySelector('.nav-group-toggle');
+
+        uzdarytiGrupes();
+
+        if (grupesMygtukas) {
+          grupesMygtukas.dataset.neatidaryti = 'true';
+
+          grupesMygtukas.focus({
+            preventScroll: true
+          });
+        }
+      }
+
+      if (navigacija.classList.contains('is-open')) {
+        uzdarytiMeniu(true);
+      }
     }
   });
 }
