@@ -221,9 +221,6 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
   grid-column: 1 / -1;
 }
 
-/* Senesnė to paties „Bendrystės lėkštės“ pasakojimo dalis lieka istorijoje,
-   bet pagrindiniame puslapyje nebedubliuojama. */
-
 #bendrystes-lekste-naujiena {
   display: none;
 }
@@ -248,9 +245,6 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
   object-fit: cover !important;
 }
 
-/* Paliekama data ir trumpas naujienos aprašymas; ilgesnis kartojamas tekstas
-   pagrindiniame puslapyje neberodomas. */
-
 #bendrystes-lekste-silagalyje-naujiena > p:nth-of-type(n + 3) {
   display: none;
 }
@@ -265,8 +259,6 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
   min-height: 100%;
   grid-template-columns: 1fr;
 }
-
-/* BagažinTurgis jau yra įvykusių veiklų archyve, todėl naujienose nekartojamas. */
 
 #naujienos .card-grid > .content-card:nth-child(2) {
   display: none;
