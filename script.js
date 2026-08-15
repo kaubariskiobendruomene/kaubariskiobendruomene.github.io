@@ -162,19 +162,75 @@ function atnaujintiRenginiuInformacija() {
     }
   });
 
-  const kalendorius = document.querySelector(
-    '#kalendorius .calendar-placeholder > div'
-  );
-  if (kalendorius) {
-    kalendorius.innerHTML = `
-      <p>
-        <strong>Rugpjūčio 29 d. · 18.00 val.</strong><br>
-        KAUBARIŠKINĖS 2026
-      </p>
-      <p>
-        <strong>Rugsėjo 26 d. · išvykimas 12.00 val.</strong><br>
-        Kaubariškio bendruomenės išvyka į Siauruko gimtadienį
-      </p>
+  const kalendoriausSekcija = pagalId('kalendorius');
+  if (kalendoriausSekcija) {
+    kalendoriausSekcija.classList.add('compact-info-section');
+    kalendoriausSekcija.innerHTML = `
+      <div class="container">
+        <div class="compact-dashboard">
+          <section class="important-dates-card" aria-labelledby="svarbios-datos-title">
+            <div class="compact-heading">
+              <p class="eyebrow">Svarbios datos</p>
+              <h2 id="svarbios-datos-title">Artimiausios datos</h2>
+            </div>
+
+            <div class="important-dates-list">
+              <a class="important-date-item" href="#artimiausi-renginiai">
+                <span class="important-date-day">RUG 29</span>
+                <span class="important-date-copy">
+                  <strong>Kaubariškinės 2026</strong>
+                  <small>18.00 val.</small>
+                </span>
+              </a>
+
+              <a class="important-date-item" href="#siauruko-gimtadienis-2026">
+                <span class="important-date-day">RGS 26</span>
+                <span class="important-date-copy">
+                  <strong>Išvyka į Siauruko gimtadienį</strong>
+                  <small>Išvykimas 12.00 val.</small>
+                </span>
+              </a>
+            </div>
+          </section>
+
+          <nav class="quick-links-card" aria-label="Greitos nuorodos">
+            <p class="eyebrow">Greitos nuorodos</p>
+            <div class="quick-links-grid">
+              <a class="quick-link" href="#naryste">
+                <span class="quick-link-mark" aria-hidden="true">N</span>
+                <span>
+                  <strong>Narystė</strong>
+                  <small>Tapti nariu</small>
+                </span>
+              </a>
+
+              <a class="quick-link" href="#parama">
+                <span class="quick-link-mark" aria-hidden="true">%</span>
+                <span>
+                  <strong>Parama</strong>
+                  <small>Skirti 1,2 % GPM</small>
+                </span>
+              </a>
+
+              <a class="quick-link" href="#dokumentai">
+                <span class="quick-link-mark" aria-hidden="true">D</span>
+                <span>
+                  <strong>Dokumentai</strong>
+                  <small>Vieši failai</small>
+                </span>
+              </a>
+
+              <a class="quick-link" href="#atsiliepimai">
+                <span class="quick-link-mark" aria-hidden="true">★</span>
+                <span>
+                  <strong>Atsiliepimai</strong>
+                  <small>Nuomonės ir pasiūlymai</small>
+                </span>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </div>
     `;
   }
 
