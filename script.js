@@ -81,7 +81,7 @@ function atnaujintiRenginiuInformacija() {
       <p><strong>Laikas:</strong> 10.00–14.00 val.</p>
       <p>
         <strong>Vieta:</strong>
-        Paplūdimio al. 6, Kaubariškis, prie SB „Kaubariškis"
+        Paplūdimio al. 6, Kaubariškis, prie SB „Kaubariškis“
         pastato aikštelėje.
       </p>
       <p>
