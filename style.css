@@ -1,10 +1,10 @@
 @import url("style-base.css");
 
 /*
-  Pagrindinio ekrano ir renginių struktūros sutvarkymas – 2026-08-15
+  Pagrindinio ekrano, renginių ir naujienų struktūros sutvarkymas – 2026-08-15
   Didelė pagrindinio ekrano nuotrauka neberodoma.
   Paliekama judanti „Kuriame bendruomenę kartu“ iliustracija.
-  Renginių informacija rodoma kompaktiškai ir be matomų pasikartojimų.
+  Renginių ir naujienų informacija rodoma kompaktiškai ir be matomų pasikartojimų.
 */
 
 /* Pagrindinis ekranas */
@@ -202,6 +202,96 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
   display: none;
 }
 
+/* Naujienos ir skelbimai */
+
+#naujienos.section {
+  padding-top: 68px;
+  padding-bottom: 68px;
+}
+
+#naujienos .container {
+  display: grid;
+  align-items: stretch;
+  gap: 18px 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+#naujienos .section-heading {
+  margin-bottom: 14px;
+  grid-column: 1 / -1;
+}
+
+/* Senesnė to paties „Bendrystės lėkštės“ pasakojimo dalis lieka istorijoje,
+   bet pagrindiniame puslapyje nebedubliuojama. */
+
+#bendrystes-lekste-naujiena {
+  display: none;
+}
+
+#bendrystes-lekste-silagalyje-naujiena {
+  min-height: 100%;
+  margin-bottom: 0 !important;
+  padding: 22px;
+}
+
+#bendrystes-lekste-silagalyje-naujiena h3 {
+  margin: 10px 0 10px;
+  font-size: 1.28rem;
+}
+
+#bendrystes-lekste-silagalyje-naujiena > img {
+  width: 100% !important;
+  height: 178px !important;
+  max-height: 178px !important;
+  margin: 12px 0 14px !important;
+  border-radius: 14px !important;
+  object-fit: cover !important;
+}
+
+/* Paliekama data ir trumpas naujienos aprašymas; ilgesnis kartojamas tekstas
+   pagrindiniame puslapyje neberodomas. */
+
+#bendrystes-lekste-silagalyje-naujiena > p:nth-of-type(n + 3) {
+  display: none;
+}
+
+#bendrystes-lekste-silagalyje-naujiena > p {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+#naujienos .card-grid {
+  display: grid;
+  min-height: 100%;
+  grid-template-columns: 1fr;
+}
+
+/* BagažinTurgis jau yra įvykusių veiklų archyve, todėl naujienose nekartojamas. */
+
+#naujienos .card-grid > .content-card:nth-child(2) {
+  display: none;
+}
+
+#naujienos .card-grid > .content-card:first-child {
+  min-height: 100%;
+  padding: 22px;
+}
+
+#naujienos .card-grid > .content-card:first-child h3 {
+  margin: 10px 0 10px;
+  font-size: 1.28rem;
+}
+
+#naujienos .card-grid > .content-card:first-child p {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+#naujienos .card-link {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
 @media (max-width: 1000px) {
   .hero-grid {
     gap: 38px;
@@ -276,5 +366,28 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
 
   #ivykusios-veiklos .content-card {
     padding: 20px;
+  }
+
+  #naujienos.section {
+    padding-top: 54px;
+    padding-bottom: 54px;
+  }
+
+  #naujienos .container {
+    grid-template-columns: 1fr;
+  }
+
+  #naujienos .section-heading {
+    grid-column: 1;
+  }
+
+  #bendrystes-lekste-silagalyje-naujiena,
+  #naujienos .card-grid > .content-card:first-child {
+    padding: 20px;
+  }
+
+  #bendrystes-lekste-silagalyje-naujiena > img {
+    height: 190px !important;
+    max-height: 190px !important;
   }
 }
