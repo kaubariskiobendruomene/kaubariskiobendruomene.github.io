@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   atnaujintiRenginiuInformacija();
+  paleistiKompaktiskasSekcijas();
   nustatytiMetus();
   paleistiLaikrodi();
   paleistiSlinkimoElementus();
@@ -162,19 +163,75 @@ function atnaujintiRenginiuInformacija() {
     }
   });
 
-  const kalendorius = document.querySelector(
-    '#kalendorius .calendar-placeholder > div'
-  );
-  if (kalendorius) {
-    kalendorius.innerHTML = `
-      <p>
-        <strong>Rugpjūčio 29 d. · 18.00 val.</strong><br>
-        KAUBARIŠKINĖS 2026
-      </p>
-      <p>
-        <strong>Rugsėjo 26 d. · išvykimas 12.00 val.</strong><br>
-        Kaubariškio bendruomenės išvyka į Siauruko gimtadienį
-      </p>
+  const kalendoriausSekcija = pagalId('kalendorius');
+  if (kalendoriausSekcija) {
+    kalendoriausSekcija.classList.add('compact-info-section');
+    kalendoriausSekcija.innerHTML = `
+      <div class="container">
+        <div class="compact-dashboard">
+          <section class="important-dates-card" aria-labelledby="svarbios-datos-title">
+            <div class="compact-heading">
+              <p class="eyebrow">Svarbios datos</p>
+              <h2 id="svarbios-datos-title">Artimiausios datos</h2>
+            </div>
+
+            <div class="important-dates-list">
+              <a class="important-date-item" href="#artimiausi-renginiai">
+                <span class="important-date-day">RUG 29</span>
+                <span class="important-date-copy">
+                  <strong>Kaubariškinės 2026</strong>
+                  <small>18.00 val.</small>
+                </span>
+              </a>
+
+              <a class="important-date-item" href="#siauruko-gimtadienis-2026">
+                <span class="important-date-day">RGS 26</span>
+                <span class="important-date-copy">
+                  <strong>Išvyka į Siauruko gimtadienį</strong>
+                  <small>Išvykimas 12.00 val.</small>
+                </span>
+              </a>
+            </div>
+          </section>
+
+          <nav class="quick-links-card" aria-label="Greitos nuorodos">
+            <p class="eyebrow">Greitos nuorodos</p>
+            <div class="quick-links-grid">
+              <a class="quick-link" href="#naryste">
+                <span class="quick-link-mark" aria-hidden="true">N</span>
+                <span>
+                  <strong>Narystė</strong>
+                  <small>Tapti nariu</small>
+                </span>
+              </a>
+
+              <a class="quick-link" href="#parama">
+                <span class="quick-link-mark" aria-hidden="true">%</span>
+                <span>
+                  <strong>Parama</strong>
+                  <small>Skirti 1,2 % GPM</small>
+                </span>
+              </a>
+
+              <a class="quick-link" href="#dokumentai">
+                <span class="quick-link-mark" aria-hidden="true">D</span>
+                <span>
+                  <strong>Dokumentai</strong>
+                  <small>Vieši failai</small>
+                </span>
+              </a>
+
+              <a class="quick-link" href="#atsiliepimai">
+                <span class="quick-link-mark" aria-hidden="true">★</span>
+                <span>
+                  <strong>Atsiliepimai</strong>
+                  <small>Nuomonės ir pasiūlymai</small>
+                </span>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </div>
     `;
   }
 
@@ -186,6 +243,365 @@ function atnaujintiRenginiuInformacija() {
 
   if (administravimoIrasas) {
     administravimoIrasas.remove();
+  }
+}
+
+function paleistiKompaktiskasSekcijas() {
+  if (!pagalId('compact-sections-stage6')) {
+    const stiliai = document.createElement('style');
+    stiliai.id = 'compact-sections-stage6';
+    stiliai.textContent = `
+      #naryste.compact-membership-section,
+      #parama.compact-support-section,
+      #atsiliepimai.compact-feedback-section,
+      #dokumentai.compact-documents-section {
+        padding-top: 52px;
+        padding-bottom: 52px;
+      }
+
+      #naryste.compact-membership-section .registration-layout {
+        gap: 18px;
+        grid-template-columns: 1fr;
+      }
+
+      #naryste.compact-membership-section .registration-information {
+        position: static;
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 24px 28px;
+        border: 1px solid rgba(35, 77, 60, 0.1);
+        border-radius: var(--radius-medium);
+        background: var(--white);
+        box-shadow: 0 6px 18px rgba(35, 77, 60, 0.06);
+      }
+
+      #naryste.compact-membership-section .registration-information h2 {
+        margin: 4px 0 12px;
+        font-size: clamp(1.7rem, 3.5vw, 2.35rem);
+      }
+
+      #naryste.compact-membership-section .registration-intro {
+        max-width: 760px;
+        margin-bottom: 0;
+        font-size: 1rem;
+      }
+
+      #naryste.compact-membership-section .registration-event-details,
+      #naryste.compact-membership-section .registration-rules {
+        display: none;
+      }
+
+      #naryste.compact-membership-section .registration-form-card[hidden],
+      #parama.compact-support-section .support-steps[hidden] {
+        display: none !important;
+      }
+
+      #naryste.compact-membership-section .registration-form-card {
+        width: min(100%, 760px);
+        margin: 4px auto 0;
+        padding: 28px;
+      }
+
+      .compact-section-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .compact-toggle-button {
+        min-height: 44px;
+        padding: 10px 18px;
+      }
+
+      #parama.compact-support-section .support-card {
+        max-width: 1040px;
+        margin: 0 auto;
+        gap: 14px;
+        padding: 26px;
+        grid-template-columns: 1fr;
+      }
+
+      #parama.compact-support-section .support-content h2 {
+        margin: 4px 0 12px;
+        font-size: clamp(1.7rem, 3.5vw, 2.35rem);
+      }
+
+      #parama.compact-support-section .support-intro {
+        margin-bottom: 16px;
+        font-size: 1rem;
+      }
+
+      #parama.compact-support-section .support-details {
+        gap: 10px;
+        margin: 14px 0;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      #parama.compact-support-section .support-details p {
+        padding: 14px;
+        font-size: 0.92rem;
+      }
+
+      #parama.compact-support-section .support-note {
+        margin-top: 14px;
+        padding: 14px 16px;
+        font-size: 0.9rem;
+      }
+
+      #parama.compact-support-section .support-actions {
+        margin-top: 16px;
+      }
+
+      #parama.compact-support-section .support-steps {
+        min-height: 0;
+        margin-top: 2px;
+        padding: 22px;
+      }
+
+      #parama.compact-support-section .support-steps h3 {
+        margin-bottom: 14px;
+        font-size: 1.3rem;
+      }
+
+      #parama.compact-support-section .support-steps li {
+        margin-bottom: 8px;
+        font-size: 0.94rem;
+      }
+
+      #atsiliepimai.compact-feedback-section .section-heading {
+        margin-bottom: 18px;
+      }
+
+      #atsiliepimai.compact-feedback-section .support-card {
+        gap: 0;
+        padding: 24px;
+        grid-template-columns: 1fr;
+      }
+
+      #atsiliepimai.compact-feedback-section .support-content h2 {
+        margin: 4px 0 10px;
+        font-size: clamp(1.55rem, 3vw, 2.1rem);
+      }
+
+      #atsiliepimai.compact-feedback-section .support-intro {
+        margin-bottom: 8px;
+        font-size: 0.96rem;
+      }
+
+      #atsiliepimai.compact-feedback-section .support-content > p[aria-label] {
+        margin: 8px 0 !important;
+        font-size: 1.55rem !important;
+      }
+
+      #atsiliepimai.compact-feedback-section .support-note,
+      #atsiliepimai.compact-feedback-section .support-steps {
+        display: none;
+      }
+
+      #atsiliepimai.compact-feedback-section .support-actions {
+        margin-top: 14px;
+      }
+
+      #atsiliepimai.compact-feedback-section .support-card + .section-heading {
+        margin-top: 26px !important;
+        margin-bottom: 12px;
+      }
+
+      #atsiliepimai.compact-feedback-section .support-card + .section-heading h2 {
+        margin-bottom: 0;
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+      }
+
+      #atsiliepimai.compact-feedback-section .card-grid {
+        max-width: 940px;
+        grid-template-columns: 1fr;
+      }
+
+      #atsiliepimai.compact-feedback-section .content-card {
+        min-height: 0;
+        padding: 20px;
+      }
+
+      #atsiliepimai.compact-feedback-section .content-card p {
+        font-size: 0.94rem;
+        line-height: 1.5;
+      }
+
+      #dokumentai.compact-documents-section .section-heading {
+        margin-bottom: 20px;
+      }
+
+      #dokumentai.compact-documents-section .document-list {
+        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #dokumentai.compact-documents-section .document-item {
+        min-height: 100%;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      #dokumentai.compact-documents-section .document-item h3 {
+        margin: 10px 0 6px;
+        font-size: 1.08rem;
+        line-height: 1.35;
+      }
+
+      #dokumentai.compact-documents-section .document-item p {
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
+      #dokumentai.compact-documents-section .document-actions {
+        width: 100%;
+        margin-top: auto;
+        padding-top: 12px;
+      }
+
+      #dokumentai.compact-documents-section .document-actions .button {
+        width: 100%;
+        min-height: 42px;
+        padding: 9px 14px;
+      }
+
+      @media (max-width: 760px) {
+        #naryste.compact-membership-section,
+        #parama.compact-support-section,
+        #atsiliepimai.compact-feedback-section,
+        #dokumentai.compact-documents-section {
+          padding-top: 42px;
+          padding-bottom: 42px;
+        }
+
+        #naryste.compact-membership-section .registration-information,
+        #naryste.compact-membership-section .registration-form-card,
+        #parama.compact-support-section .support-card,
+        #atsiliepimai.compact-feedback-section .support-card {
+          padding: 20px;
+        }
+
+        #parama.compact-support-section .support-details,
+        #dokumentai.compact-documents-section .document-list {
+          grid-template-columns: 1fr;
+        }
+
+        .compact-section-actions,
+        #parama.compact-support-section .support-actions {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .compact-section-actions .button,
+        #parama.compact-support-section .support-actions .button,
+        #parama.compact-support-section .support-actions .text-link {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    `;
+    document.head.appendChild(stiliai);
+  }
+
+  const naryste = pagalId('naryste');
+  if (naryste) {
+    naryste.classList.add('compact-membership-section');
+
+    const informacija = naryste.querySelector('.registration-information');
+    const formosKortele = naryste.querySelector('.registration-form-card');
+
+    if (informacija && formosKortele && !pagalId('membership-form-toggle')) {
+      formosKortele.id = 'membership-form-card';
+      formosKortele.hidden = true;
+
+      const veiksmai = document.createElement('div');
+      veiksmai.className = 'compact-section-actions';
+
+      const mygtukas = document.createElement('button');
+      mygtukas.id = 'membership-form-toggle';
+      mygtukas.className = 'button button-primary compact-toggle-button';
+      mygtukas.type = 'button';
+      mygtukas.setAttribute('aria-controls', 'membership-form-card');
+      mygtukas.setAttribute('aria-expanded', 'false');
+      mygtukas.textContent = 'Pildyti narystės paraišką';
+
+      veiksmai.appendChild(mygtukas);
+      informacija.appendChild(veiksmai);
+
+      const nustatytiForma = (atidaryta, slinkti = false) => {
+        formosKortele.hidden = !atidaryta;
+        naryste.classList.toggle('is-form-open', atidaryta);
+        mygtukas.setAttribute('aria-expanded', String(atidaryta));
+        mygtukas.textContent = atidaryta
+          ? 'Uždaryti paraišką'
+          : 'Pildyti narystės paraišką';
+
+        if (atidaryta && slinkti) {
+          window.setTimeout(() => {
+            formosKortele.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }, 50);
+        }
+      };
+
+      mygtukas.addEventListener('click', () => {
+        nustatytiForma(formosKortele.hidden, !formosKortele.hidden);
+      });
+
+      const atvertiPagalAdresa = () => {
+        if (window.location.hash === '#naryste') {
+          nustatytiForma(true, false);
+        }
+      };
+
+      atvertiPagalAdresa();
+      window.addEventListener('hashchange', atvertiPagalAdresa);
+    }
+  }
+
+  const parama = pagalId('parama');
+  if (parama) {
+    parama.classList.add('compact-support-section');
+
+    const zingsniai = parama.querySelector('.support-steps');
+    const veiksmai = parama.querySelector('.support-actions');
+
+    if (zingsniai && veiksmai && !pagalId('support-steps-toggle')) {
+      zingsniai.id = 'support-steps-card';
+      zingsniai.hidden = true;
+
+      const mygtukas = document.createElement('button');
+      mygtukas.id = 'support-steps-toggle';
+      mygtukas.className = 'button button-secondary compact-toggle-button';
+      mygtukas.type = 'button';
+      mygtukas.setAttribute('aria-controls', 'support-steps-card');
+      mygtukas.setAttribute('aria-expanded', 'false');
+      mygtukas.textContent = 'Kaip skirti 1,2 %';
+      veiksmai.appendChild(mygtukas);
+
+      mygtukas.addEventListener('click', () => {
+        const atidaryti = zingsniai.hidden;
+        zingsniai.hidden = !atidaryti;
+        mygtukas.setAttribute('aria-expanded', String(atidaryti));
+        mygtukas.textContent = atidaryti
+          ? 'Uždaryti instrukciją'
+          : 'Kaip skirti 1,2 %';
+      });
+    }
+  }
+
+  const atsiliepimai = pagalId('atsiliepimai');
+  if (atsiliepimai) {
+    atsiliepimai.classList.add('compact-feedback-section');
+  }
+
+  const dokumentai = pagalId('dokumentai');
+  if (dokumentai) {
+    dokumentai.classList.add('compact-documents-section');
   }
 }
 
