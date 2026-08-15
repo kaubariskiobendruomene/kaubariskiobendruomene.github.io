@@ -103,13 +103,9 @@
   font-size: 1.38rem;
 }
 
-/* Kaubariškinės jau rodomos viršuje kaip pagrindinis renginys. */
-
 #kaubariskines-2026 {
   display: none;
 }
-
-/* Artimiausių renginių dalyje lieka tik kiti būsimi renginiai. */
 
 section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
   grid-template-columns: 1fr;
@@ -195,8 +191,6 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
 #ivykusios-veiklos .card-link {
   font-size: 0.92rem;
 }
-
-/* Istoriniame BagažinTurgio įraše plakatas nebedubliuojamas. */
 
 #ivykusios-veiklos #bagazinturgis .event-poster-button {
   display: none;
