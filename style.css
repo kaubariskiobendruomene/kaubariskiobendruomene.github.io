@@ -1,10 +1,17 @@
 @import url("style-base.css");
 
 /*
-  Pagrindinio ekrano sutvarkymas – 2026-08-15
-  Paliekama judanti „Kuriame bendruomenę kartu“ iliustracija,
-  o didelė pagrindinio ekrano nuotrauka neberodoma.
+  Pagrindinio ekrano ir renginių struktūros sutvarkymas – 2026-08-15
+  Didelė pagrindinio ekrano nuotrauka neberodoma.
+  Paliekama judanti „Kuriame bendruomenę kartu“ iliustracija.
+  Renginių informacija rodoma kompaktiškai ir be matomų pasikartojimų.
 */
+
+/* Pagrindinis ekranas */
+
+.announcement-bar {
+  display: none;
+}
 
 .hero-section {
   padding: 58px 0 54px;
@@ -42,14 +49,167 @@
   font-size: 1rem;
 }
 
+/* Pagrindinis artimiausias renginys */
+
 .featured-event-card {
+  position: relative;
   margin-top: 46px;
+  overflow: hidden;
+  border-color: rgba(35, 77, 60, 0.14);
+  box-shadow: 0 10px 30px rgba(35, 77, 60, 0.08);
+}
+
+.featured-event-card::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 5px;
+  background: var(--gold);
+  content: "";
+}
+
+.featured-event-card h2 {
+  font-size: clamp(2rem, 5vw, 3.2rem) !important;
+  line-height: 1.05 !important;
+}
+
+.featured-event-card > div:first-child {
+  max-width: 760px;
+}
+
+/* Renginiai */
+
+#renginiai.section {
+  padding-top: 70px;
+  padding-bottom: 72px;
+}
+
+#renginiai .section-heading {
+  margin-bottom: 32px;
+}
+
+.event-groups {
+  gap: 42px;
+}
+
+.event-group {
+  gap: 18px;
+}
+
+.event-group-title {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(35, 77, 60, 0.11);
+  font-size: 1.38rem;
+}
+
+/* Kaubariškinės jau rodomos viršuje kaip pagrindinis renginys. */
+
+#kaubariskines-2026 {
+  display: none;
+}
+
+/* Artimiausių renginių dalyje lieka tik kiti būsimi renginiai. */
+
+section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
+  grid-template-columns: 1fr;
+}
+
+#siauruko-gimtadienis-2026 {
+  display: grid;
+  min-height: 0;
+  align-items: start;
+  gap: 8px 30px;
+  padding: 24px;
+  grid-template-columns: minmax(190px, 235px) minmax(0, 1fr);
+}
+
+#siauruko-gimtadienis-2026 > .event-poster-button {
+  width: 100%;
+  margin: 0;
+  grid-column: 1;
+  grid-row: 1 / span 8;
+}
+
+#siauruko-gimtadienis-2026 > :not(.event-poster-button) {
+  grid-column: 2;
+}
+
+#siauruko-gimtadienis-2026 .event-poster-image {
+  width: 100%;
+  height: 300px;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+#siauruko-gimtadienis-2026 .status-badge {
+  width: fit-content;
+  margin-bottom: 2px;
+}
+
+#siauruko-gimtadienis-2026 h3 {
+  margin: 4px 0 8px;
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+}
+
+#siauruko-gimtadienis-2026 p {
+  margin: 2px 0;
+}
+
+#siauruko-gimtadienis-2026 .event-register-button {
+  width: fit-content;
+  margin-top: 12px;
+}
+
+/* Įvykusių veiklų archyvas */
+
+#ivykusios-veiklos {
+  padding-top: 6px;
+}
+
+#ivykusios-veiklos .event-group-grid {
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#ivykusios-veiklos .content-card {
+  min-height: 0;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(35, 77, 60, 0.06);
+}
+
+#ivykusios-veiklos .content-card:hover {
+  transform: translateY(-2px);
+}
+
+#ivykusios-veiklos .content-card h3 {
+  margin: 12px 0 9px;
+  font-size: 1.16rem;
+}
+
+#ivykusios-veiklos .content-card p {
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+#ivykusios-veiklos .card-link {
+  font-size: 0.92rem;
+}
+
+/* Istoriniame BagažinTurgio įraše plakatas nebedubliuojamas. */
+
+#ivykusios-veiklos #bagazinturgis .event-poster-button {
+  display: none;
 }
 
 @media (max-width: 1000px) {
   .hero-grid {
     gap: 38px;
     grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  }
+
+  #ivykusios-veiklos .event-group-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -83,5 +243,38 @@
 
   .featured-event-card {
     margin-top: 34px;
+  }
+
+  #renginiai.section {
+    padding-top: 54px;
+    padding-bottom: 56px;
+  }
+
+  #siauruko-gimtadienis-2026 {
+    display: flex;
+    gap: 0;
+    padding: 22px;
+  }
+
+  #siauruko-gimtadienis-2026 > .event-poster-button {
+    width: min(100%, 320px);
+    margin: 0 auto 18px;
+  }
+
+  #siauruko-gimtadienis-2026 .event-poster-image {
+    height: auto;
+    max-height: 390px;
+  }
+
+  #siauruko-gimtadienis-2026 .event-register-button {
+    width: 100%;
+  }
+
+  #ivykusios-veiklos .event-group-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #ivykusios-veiklos .content-card {
+    padding: 20px;
   }
 }
