@@ -1,7 +1,7 @@
 @import url("style-base.css");
 
 /*
-  Pagrindinio ekrano, renginių, naujienų ir greitų nuorodų struktūros sutvarkymas – 2026-08-15
+  Pagrindinio ekrano, renginių, naujienų, greitų nuorodų, galerijos ir „Apie“ skilčių struktūros sutvarkymas – 2026-08-15
   Didelė pagrindinio ekrano nuotrauka neberodoma.
   Paliekama judanti „Kuriame bendruomenę kartu“ iliustracija.
   Renginių, naujienų ir svarbių nuorodų informacija rodoma kompaktiškai ir be matomų pasikartojimų.
@@ -409,6 +409,113 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
   font-weight: 900;
 }
 
+/* Kompaktiška galerijos peržiūra */
+
+#galerija.section {
+  padding-top: 58px;
+  padding-bottom: 58px;
+}
+
+#galerija .container {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#galerija .container > .section-heading:first-child {
+  margin-bottom: 10px;
+  grid-column: 1 / -1;
+}
+
+#galerija .container > .section-heading:not(:first-child) {
+  display: none;
+}
+
+#galerija .container > .gallery-grid {
+  display: contents;
+}
+
+#galerija .container > .gallery-grid:last-of-type {
+  display: none;
+}
+
+#galerija .gallery-grid .gallery-item:nth-child(n + 5) {
+  display: none;
+}
+
+#galerija .gallery-item {
+  min-height: 0;
+  border-radius: 16px;
+}
+
+#galerija .gallery-item img {
+  height: 215px;
+}
+
+/* Kompaktiškos „Apie“ dalys */
+
+#apie-kaubariski.section {
+  padding-top: 58px;
+  padding-bottom: 34px;
+}
+
+#apie-kaubariski .section-heading {
+  margin-bottom: 22px;
+}
+
+#apie-kaubariski .place-profile {
+  gap: 24px;
+  grid-template-columns: minmax(220px, 0.55fr) minmax(0, 1.45fr);
+}
+
+#apie-kaubariski .place-photo img {
+  height: 230px;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+#apie-kaubariski .content-card {
+  min-height: 0;
+  justify-content: center;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(35, 77, 60, 0.05);
+}
+
+#apie-kaubariski .content-card p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.62;
+}
+
+#apie-mus.section {
+  padding-top: 44px;
+  padding-bottom: 46px;
+}
+
+#apie-mus .about-grid {
+  gap: 0;
+  grid-template-columns: 1fr;
+}
+
+#apie-mus .about-logo-wrapper {
+  display: none;
+}
+
+#apie-mus h2 {
+  margin-bottom: 14px;
+  font-size: clamp(1.9rem, 3.5vw, 2.55rem);
+}
+
+#apie-mus p {
+  max-width: 860px;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+#apie-mus .hero-buttons {
+  margin-top: 18px;
+}
+
 @media (max-width: 1000px) {
   .hero-grid {
     gap: 38px;
@@ -421,6 +528,14 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
 
   .compact-dashboard {
     grid-template-columns: 1fr;
+  }
+
+  #galerija .container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #apie-kaubariski .place-profile {
+    grid-template-columns: minmax(190px, 0.6fr) minmax(0, 1.4fr);
   }
 }
 
@@ -529,6 +644,42 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
     min-height: 78px;
     padding: 12px;
   }
+
+  #galerija.section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  #galerija .container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #galerija .gallery-item img {
+    height: 180px;
+  }
+
+  #apie-kaubariski.section {
+    padding-top: 48px;
+    padding-bottom: 28px;
+  }
+
+  #apie-kaubariski .place-profile {
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+
+  #apie-kaubariski .place-photo img {
+    height: 210px;
+  }
+
+  #apie-kaubariski .content-card {
+    padding: 20px;
+  }
+
+  #apie-mus.section {
+    padding-top: 38px;
+    padding-bottom: 40px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -538,5 +689,13 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
 
   .important-date-item {
     align-items: start;
+  }
+
+  #galerija .container {
+    grid-template-columns: 1fr;
+  }
+
+  #galerija .gallery-item img {
+    height: 220px;
   }
 }
