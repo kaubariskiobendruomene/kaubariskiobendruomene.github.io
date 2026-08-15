@@ -292,6 +292,137 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
   padding-top: 12px;
 }
 
+/* Svarbios datos ir greitos nuorodos */
+
+#kalendorius.compact-info-section {
+  padding: 54px 0;
+  background: var(--white);
+}
+
+.compact-dashboard {
+  display: grid;
+  align-items: stretch;
+  gap: 22px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.important-dates-card,
+.quick-links-card {
+  padding: 24px;
+  border: 1px solid rgba(35, 77, 60, 0.1);
+  border-radius: var(--radius-medium);
+  background: var(--sand-light);
+  box-shadow: 0 6px 18px rgba(35, 77, 60, 0.06);
+}
+
+.compact-heading h2 {
+  margin: 4px 0 18px;
+  color: var(--green-dark);
+  font-size: clamp(1.55rem, 3vw, 2.1rem);
+  line-height: 1.15;
+}
+
+.important-dates-list {
+  display: grid;
+  gap: 10px;
+}
+
+.important-date-item {
+  display: grid;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(35, 77, 60, 0.09);
+  border-radius: 14px;
+  background: var(--white);
+  text-decoration: none;
+  grid-template-columns: auto 1fr;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.important-date-item:hover,
+.quick-link:hover {
+  border-color: rgba(198, 161, 91, 0.65);
+  box-shadow: var(--shadow-small);
+  transform: translateY(-2px);
+}
+
+.important-date-day {
+  display: inline-flex;
+  width: 62px;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--green-dark);
+  color: var(--white);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+}
+
+.important-date-copy,
+.quick-link > span:last-child {
+  display: grid;
+  gap: 2px;
+}
+
+.important-date-copy strong,
+.quick-link strong {
+  color: var(--green-dark);
+  line-height: 1.25;
+}
+
+.important-date-copy small,
+.quick-link small {
+  color: var(--text-light);
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.quick-links-card > .eyebrow {
+  margin-bottom: 16px;
+}
+
+.quick-links-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.quick-link {
+  display: grid;
+  min-height: 82px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(35, 77, 60, 0.09);
+  border-radius: 14px;
+  background: var(--white);
+  text-decoration: none;
+  grid-template-columns: auto 1fr;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.quick-link-mark {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green-dark);
+  font-size: 0.92rem;
+  font-weight: 900;
+}
+
 @media (max-width: 1000px) {
   .hero-grid {
     gap: 38px;
@@ -300,6 +431,10 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
 
   #ivykusios-veiklos .event-group-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .compact-dashboard {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -389,5 +524,33 @@ section[aria-labelledby="artimiausi-renginiai-title"] .event-group-grid {
   #bendrystes-lekste-silagalyje-naujiena > img {
     height: 190px !important;
     max-height: 190px !important;
+  }
+
+  #kalendorius.compact-info-section {
+    padding: 44px 0;
+  }
+
+  .important-dates-card,
+  .quick-links-card {
+    padding: 20px;
+  }
+
+  .quick-links-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quick-link {
+    min-height: 78px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 520px) {
+  .quick-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .important-date-item {
+    align-items: start;
   }
 }
