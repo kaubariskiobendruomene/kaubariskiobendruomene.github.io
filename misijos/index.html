@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="lt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f0df" />
+  <meta name="description" content="Kaubariškinių QR misijų žaidimas" />
+  <title>Kaubariškinių misijos</title>
+  <style>
+    :root{--cream:#f7f0df;--paper:#fffaf0;--green:#24562f;--green2:#377044;--red:#a43f31;--gold:#d7aa47;--ink:#263229;--muted:#6d746d;--line:#d8ccb1;--shadow:0 16px 38px rgba(59,48,31,.14)}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    body{background-image:radial-gradient(circle at 12% 8%,rgba(215,170,71,.12),transparent 24%),radial-gradient(circle at 88% 14%,rgba(55,112,68,.10),transparent 25%),linear-gradient(rgba(255,255,255,.2),rgba(255,255,255,.2));}
+    .wrap{max-width:560px;margin:0 auto;padding:18px 16px 36px}
+    .bunting{display:flex;justify-content:center;gap:7px;margin:3px auto 10px;overflow:hidden;height:28px}
+    .flag{width:24px;height:26px;clip-path:polygon(0 0,100% 0,50% 100%);background:var(--green)}
+    .flag:nth-child(2n){background:var(--gold)}.flag:nth-child(3n){background:var(--red)}
+    .brand{text-align:center;margin-bottom:14px}
+    .brand h1{font-family:Georgia,serif;margin:0;color:var(--green);font-size:clamp(30px,8.5vw,44px);letter-spacing:.5px;line-height:1.02}
+    .brand .sub{color:var(--red);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;font-size:13px}
+    .brand .heart{color:var(--red);font-size:18px;margin-top:2px}
+    .card{background:rgba(255,250,240,.96);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:20px;position:relative;overflow:hidden}
+    .card:before,.card:after{content:"✿";position:absolute;color:rgba(215,170,71,.34);font-size:46px}.card:before{left:-8px;bottom:-10px}.card:after{right:-8px;top:-14px}
+    .progressHead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:8px}
+    .progressHead strong{color:var(--green);font-size:19px}.progressHead span{font-weight:800;color:var(--red)}
+    .bar{height:12px;background:#ebe4d4;border-radius:999px;overflow:hidden;border:1px solid #ddd0b7}.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--green2),var(--gold));width:0%;transition:width .35s ease;border-radius:999px}
+    .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:18px 0 4px}
+    .missionDot{aspect-ratio:1;border-radius:16px;border:1.5px dashed #b8ab90;background:#f4efe3;display:flex;align-items:center;justify-content:center;font-weight:900;color:#8b897f;font-size:18px;position:relative}
+    .missionDot.done{background:#e1f0e3;border-style:solid;border-color:#8eb295;color:var(--green)}
+    .missionDot.done:after{content:"✓";position:absolute;right:5px;top:2px;font-size:13px;color:var(--green)}
+    .intro{text-align:center;line-height:1.55;margin:14px 4px 2px;color:#3f493f}.intro strong{color:var(--green)}
+    .note{margin-top:16px;background:#f4ead0;border-left:4px solid var(--gold);padding:11px 12px;border-radius:10px;font-size:13px;line-height:1.45;color:#55574f}
+    .btn{appearance:none;border:0;width:100%;border-radius:15px;padding:15px 16px;font-weight:900;font-size:16px;cursor:pointer;transition:.18s transform,.18s opacity;background:var(--green);color:#fff;box-shadow:0 7px 16px rgba(36,86,47,.18)}
+    .btn:active{transform:scale(.985)}.btn.secondary{background:#f2ead9;color:var(--green);border:1px solid #d9cdb4;box-shadow:none}.btn.danger{background:transparent;color:#8a5a52;border:1px dashed #c9b7ad;box-shadow:none;font-size:14px}.btn[disabled]{opacity:.55;cursor:default}
+    .homeReset{margin-top:18px}
+    .missionTop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.badge{background:var(--green);color:white;padding:8px 12px;border-radius:999px;font-weight:900;letter-spacing:.05em;font-size:13px}.miniProgress{font-weight:800;color:var(--red);font-size:14px}
+    .secret{text-align:center;padding:24px 4px 10px}.secret .gift{font-size:54px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.10));animation:float 2.3s ease-in-out infinite}@keyframes float{50%{transform:translateY(-6px)}}
+    .secret h2{font-family:Georgia,serif;color:var(--green);font-size:27px;margin:10px 0 8px}.secret p{color:var(--muted);margin:0 0 18px}
+    .task{display:none;text-align:center;animation:reveal .38s ease both}@keyframes reveal{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+    .task.show{display:block}.taskIcon{font-size:54px;margin-top:4px}.task h2{font-family:Georgia,serif;color:var(--green);font-size:26px;line-height:1.1;margin:8px 0 10px}.taskText{font-size:19px;line-height:1.48;font-weight:650;margin:0 auto 18px;max-width:440px}.safety{font-size:13px;background:#fff3d5;border:1px solid #e3c572;padding:10px;border-radius:12px;margin:0 0 14px;color:#6e5826}
+    .success{display:none;background:#e3f1e5;border:1px solid #a6c9ac;border-radius:16px;padding:15px;margin:14px 0;color:#244d2c;text-align:left;line-height:1.48}.success.show{display:block;animation:reveal .35s ease both}.success strong{display:block;font-size:19px;margin-bottom:3px}.afterActions{display:grid;gap:10px;margin-top:10px}
+    .already{display:none;background:#e3f1e5;border:1px solid #a6c9ac;color:#24562f;border-radius:14px;padding:10px 12px;font-weight:800;text-align:center;margin-bottom:12px}.already.show{display:block}
+    .modal{position:fixed;inset:0;background:rgba(24,34,27,.62);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.modalBox{max-width:460px;width:100%;background:var(--paper);border-radius:24px;padding:26px 20px;box-shadow:0 24px 70px rgba(0,0,0,.28);text-align:center;border:2px solid var(--gold);animation:pop .35s ease both}@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}.modalBox .emoji{font-size:58px}.modalBox h2{font-family:Georgia,serif;color:var(--green);font-size:28px;margin:6px 0 12px}.modalBox p{line-height:1.55;margin:0 0 18px}.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:19}.confetti i{position:absolute;top:-20px;width:10px;height:18px;border-radius:3px;animation:fall 2.6s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(760deg)}}
+    .footer{text-align:center;font-size:12px;color:#777469;margin-top:16px;line-height:1.45}
+    .hidden{display:none!important}
+    @media (max-width:380px){.wrap{padding-left:12px;padding-right:12px}.card{padding:16px}.grid{gap:7px}.missionDot{border-radius:13px}.taskText{font-size:17px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="bunting" aria-hidden="true"><i class="flag"></i><i class="flag"></i><i class="flag"></i><i class="flag"></i><i class="flag"></i><i class="flag"></i><i class="flag"></i><i class="flag"></i><i class="flag"></i></div>
+    <header class="brand">
+      <h1>KAUBARIŠKINIŲ MISIJOS</h1>
+      <div class="sub">QR medžioklė</div>
+      <div class="heart">♥</div>
+    </header>
+
+    <section id="homeView" class="card">
+      <div class="progressHead"><strong>Tavo pažanga</strong><span id="homeCount">0/10</span></div>
+      <div class="bar"><i id="homeBar"></i></div>
+      <div class="grid" id="missionGrid" aria-label="Misijų pažanga"></div>
+      <p class="intro"><strong>Surask šventės teritorijoje paslėptus QR kodus</strong>, nuskenuok juos ir atlik misijas. Užduotys atsivers tik radus QR kodą.</p>
+      <div class="note">📌 Pažymėjimas telefone yra žaidimo pažanga. <strong>Tikras užduoties patvirtinimas – savanorio antspaudas Kaubariškinių pase.</strong></div>
+      <button id="resetBtn" class="btn danger homeReset" type="button">Pradėti iš naujo</button>
+    </section>
+
+    <section id="missionView" class="card hidden">
+      <div class="missionTop"><span id="missionBadge" class="badge">MISIJA 1</span><span id="miniCount" class="miniProgress">0/10 atlikta</span></div>
+      <div id="already" class="already">✅ Ši misija jau pažymėta atlikta</div>
+      <div id="secret" class="secret">
+        <div class="gift">🎁</div>
+        <h2>Radai slaptą misiją!</h2>
+        <p>Pasiruošęs sužinoti, ką reikės padaryti?</p>
+        <button id="openTask" class="btn" type="button">🎁 ATIDARYTI UŽDUOTĮ</button>
+      </div>
+      <div id="task" class="task">
+        <div id="taskIcon" class="taskIcon">🌈</div>
+        <h2 id="taskTitle"></h2>
+        <p id="taskText" class="taskText"></p>
+        <div id="safety" class="safety hidden">⚠️ Prie tvenkinio laikykis saugaus atstumo nuo vandens. Mažesni vaikai šią misiją atlieka su suaugusiuoju.</div>
+        <button id="completeBtn" class="btn" type="button">✅ PAŽYMĖTI KAIP ATLIKTĄ</button>
+        <div id="success" class="success"><strong>🎉 Misija atlikta!</strong>Dabar parodyk nuotrauką savanoriui ir gauk antspaudą savo Kaubariškinių pase.<br><b id="successCount"></b></div>
+        <div class="afterActions"><button id="allBtn" class="btn secondary" type="button">Peržiūrėti visas misijas</button></div>
+        <div class="note">Pažymėjimas telefone nepakeičia antspaudo pase.</div>
+      </div>
+    </section>
+    <div class="footer">Kaubariškinės 2026 • Mūsų bendruomenė – mūsų šventė!</div>
+  </main>
+
+  <div id="finalModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="finalTitle">
+    <div class="modalBox">
+      <div class="emoji">🎉🏆🎟️</div>
+      <h2 id="finalTitle">VISOS KAUBARIŠKINIŲ MISIJOS ĮVEIKTOS!</h2>
+      <p>Dabar parodyk savo Kaubariškinių pasą organizatoriams.<br><strong>Surinkai 10 antspaudų? Tavęs laukia loterijos bilietas!</strong> 🎟️</p>
+      <button id="closeModal" class="btn" type="button">Puiku!</button>
+    </div>
+  </div>
+  <div id="confetti" class="confetti"></div>
+
+<script>
+(() => {
+  const STORAGE_KEY = 'kaubariskines_misijos_2026';
+  const tasks = {
+    1:{title:'SPALVŲ MEDŽIOTOJAS',text:'Susirask spalvingiausią vietą šventės teritorijoje ir pasidaryk selfie!',icon:'🌈'},
+    2:{title:'SĖDĖK IR ŠYPSOKIS',text:'Susirask suoliuką, atsisėsk ir pasidaryk selfie!',icon:'🪑'},
+    3:{title:'JUOKINGAS VEIDAS',text:'Padaryk pačią juokingiausią veido išraišką ir pasidaryk selfie!',icon:'😜'},
+    4:{title:'MIRKTELĖK!',text:'Pasidaryk selfie užmerkęs vieną akį!',icon:'😉'},
+    5:{title:'SURASK DRAUGĄ',text:'Susirask naują draugą šventėje ir kartu pasidarykite selfie!',icon:'🤝'},
+    6:{title:'ĄŽUOLO DRAUGAS',text:'Susirask ąžuolą, paliesk jo kamieną ir pasidaryk selfie!',icon:'🌳'},
+    7:{title:'LAPO IŠŠŪKIS',text:'Surask gražų nukritusį lapą, palaikyk jį prie veido ir pasidaryk selfie!',icon:'🍂'},
+    8:{title:'PRIE TVENKINIO',text:'Nueik prie tvenkinio, surask vietą, iš kurios matosi salelė, ir pasidaryk selfie!',icon:'💧'},
+    9:{title:'KAUBARIŠKINIŲ VARTAI',text:'Susirask šventės vartus ir pasidaryk selfie taip, kad nuotraukoje matytųsi užrašas „KAUBARIŠKINĖS“!',icon:'🎪'},
+    10:{title:'DJ FONE',text:'Susirask DJ ir pasidaryk selfie taip, kad DJ matytųsi nuotraukos fone!',icon:'🎧'}
+  };
+  const $=id=>document.getElementById(id);
+  function load(){
+    try{const raw=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');if(!Array.isArray(raw))return[];return [...new Set(raw.map(Number).filter(n=>n>=1&&n<=10))].sort((a,b)=>a-b)}catch(e){return[]}
+  }
+  function save(done){localStorage.setItem(STORAGE_KEY,JSON.stringify(done))}
+  let done=load();
+  const params=new URLSearchParams(location.search);const mission=Number(params.get('m'));const valid=Number.isInteger(mission)&&tasks[mission];
+  function countUI(){const n=done.length;$('homeCount').textContent=`${n}/10`;$('homeBar').style.width=`${n*10}%`;$('miniCount').textContent=`${n}/10 atlikta`;renderGrid()}
+  function renderGrid(){const g=$('missionGrid');g.innerHTML='';for(let i=1;i<=10;i++){const d=document.createElement('div');d.className='missionDot'+(done.includes(i)?' done':'');d.textContent=i;d.setAttribute('aria-label',`Misija ${i}: ${done.includes(i)?'atlikta':'neatlikta'}`);g.appendChild(d)}}
+  function goHome(){history.replaceState({},'',location.pathname);$('missionView').classList.add('hidden');$('homeView').classList.remove('hidden');countUI();window.scrollTo({top:0,behavior:'smooth'})}
+  function reveal(){ $('secret').classList.add('hidden');$('task').classList.add('show'); }
+  function showMission(){
+    $('homeView').classList.add('hidden');$('missionView').classList.remove('hidden');$('missionBadge').textContent=`MISIJA ${mission}`;$('taskIcon').textContent=tasks[mission].icon;$('taskTitle').textContent=tasks[mission].title;$('taskText').textContent=tasks[mission].text;
+    if(mission===8)$('safety').classList.remove('hidden');
+    if(done.includes(mission)){$('already').classList.add('show');reveal();$('completeBtn').disabled=true;$('completeBtn').textContent='✅ JAU ATLIKTA';}
+    countUI();
+  }
+  function confetti(){const c=$('confetti');c.innerHTML='';const colors=['#24562f','#a43f31','#d7aa47','#6c8f67'];for(let i=0;i<46;i++){const p=document.createElement('i');p.style.left=Math.random()*100+'vw';p.style.background=colors[i%colors.length];p.style.animationDelay=(Math.random()*.55)+'s';p.style.transform=`rotate(${Math.random()*180}deg)`;c.appendChild(p)}setTimeout(()=>c.innerHTML='',3400)}
+  function final(){confetti();$('finalModal').classList.add('show')}
+  $('openTask').addEventListener('click',reveal);
+  $('completeBtn').addEventListener('click',()=>{if(!done.includes(mission)){done.push(mission);done.sort((a,b)=>a-b);save(done);countUI();$('successCount').textContent=`Tavo pažanga: ${done.length}/10`;$('success').classList.add('show');$('completeBtn').disabled=true;$('completeBtn').textContent='✅ ATLIKTA';if(done.length===10)setTimeout(final,450)}});
+  $('allBtn').addEventListener('click',goHome);
+  $('closeModal').addEventListener('click',()=>{$('finalModal').classList.remove('show');goHome()});
+  $('resetBtn').addEventListener('click',()=>{if(confirm('Ar tikrai nori ištrinti visas šiame telefone pažymėtas misijas ir pradėti iš naujo?')){localStorage.removeItem(STORAGE_KEY);done=[];countUI()}});
+  countUI(); if(valid)showMission(); else {$('homeView').classList.remove('hidden');$('missionView').classList.add('hidden')}
+})();
+</script>
+</body>
+</html>
