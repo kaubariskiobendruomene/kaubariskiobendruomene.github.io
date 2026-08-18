@@ -1,48 +1,72 @@
 @import url("style-layout.css");
 
-/* Kaubariškinės 2026 skelbimas prie pagrindinio artėjančio renginio */
+/* Kaubariškinės 2026 – išsami artėjančio renginio kortelė */
 
-.featured-event-card > div:first-child {
-  order: 1;
-  flex: 1 1 430px;
+#renginiai {
+  scroll-margin-top: 96px;
 }
 
+/* Viršutinė kortelė lieka tik trumpa renginio santrauka. */
 .featured-event-card::after {
+  display: none;
+  content: none;
+}
+
+.featured-event-card > div:first-child {
+  flex: 1 1 auto;
+}
+
+/* „Plačiau“ nuveda į renginių dalį, kur rodoma išsami Kaubariškinių kortelė. */
+#kaubariskines-2026 {
+  display: grid;
+  min-height: 0;
+  align-items: start;
+  gap: 8px 30px;
+  padding: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+}
+
+#kaubariskines-2026 > * {
+  grid-column: 1;
+}
+
+#kaubariskines-2026::after {
   display: block;
-  order: 2;
-  width: 235px;
-  flex: 0 0 235px;
+  width: 100%;
   aspect-ratio: 1032 / 1465;
   border-radius: 16px;
   background: url("images/kaubariskines-2026-skelbimas.webp") center / contain no-repeat;
   box-shadow: 0 8px 22px rgba(35, 77, 60, 0.14);
   content: "";
+  grid-column: 2;
+  grid-row: 1 / span 10;
 }
 
-.featured-event-card .event-card-actions {
-  order: 3;
+#kaubariskines-2026 .status-badge {
+  width: fit-content;
+  margin-bottom: 2px;
 }
 
-@media (max-width: 1000px) {
-  .featured-event-card::after {
-    width: 205px;
-    flex-basis: 205px;
-  }
+#kaubariskines-2026 h3 {
+  margin-top: 8px !important;
 }
 
 @media (max-width: 760px) {
-  .featured-event-card > div:first-child {
-    width: 100%;
-    flex: none;
+  #renginiai {
+    scroll-margin-top: 82px;
   }
 
-  .featured-event-card::after {
+  #kaubariskines-2026 {
+    display: flex;
+    gap: 0;
+    padding: 22px;
+  }
+
+  #kaubariskines-2026::after {
+    order: -1;
     width: min(100%, 360px);
+    margin: 0 auto 20px;
     flex: none;
     align-self: center;
-  }
-
-  .featured-event-card .event-card-actions {
-    width: 100%;
   }
 }
