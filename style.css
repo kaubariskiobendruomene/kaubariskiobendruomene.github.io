@@ -18,28 +18,14 @@
 
 /* „Plačiau“ nuveda į renginių dalį, kur rodoma išsami Kaubariškinių kortelė. */
 #kaubariskines-2026 {
-  display: grid;
-  min-height: 0;
-  align-items: start;
-  gap: 8px 30px;
-  padding: 24px;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
-}
-
-#kaubariskines-2026 > * {
-  grid-column: 1;
-}
-
-#kaubariskines-2026::after {
   display: block;
-  width: 100%;
-  aspect-ratio: 1032 / 1465;
-  border-radius: 16px;
-  background: url("images/kaubariskines-2026-skelbimas.webp") center / contain no-repeat;
-  box-shadow: 0 8px 22px rgba(35, 77, 60, 0.14);
-  content: "";
-  grid-column: 2;
-  grid-row: 1 / span 10;
+  min-height: 455px;
+  padding: 24px 330px 24px 24px;
+  background-color: var(--white);
+  background-image: url("images/kaubariskines-2026-skelbimas.webp?v=20260819-2");
+  background-repeat: no-repeat;
+  background-position: right 24px center;
+  background-size: 280px auto;
 }
 
 #kaubariskines-2026 .status-badge {
@@ -48,7 +34,15 @@
 }
 
 #kaubariskines-2026 h3 {
-  margin-top: 8px !important;
+  margin-top: 12px !important;
+}
+
+@media (max-width: 900px) {
+  #kaubariskines-2026 {
+    min-height: 420px;
+    padding-right: 275px;
+    background-size: 225px auto;
+  }
 }
 
 @media (max-width: 760px) {
@@ -57,16 +51,10 @@
   }
 
   #kaubariskines-2026 {
-    display: flex;
-    gap: 0;
+    min-height: 0;
     padding: 22px;
-  }
-
-  #kaubariskines-2026::after {
-    order: -1;
-    width: min(100%, 360px);
-    margin: 0 auto 20px;
-    flex: none;
-    align-self: center;
+    padding-bottom: min(550px, 142vw);
+    background-position: center bottom 22px;
+    background-size: min(360px, calc(100% - 44px)) auto;
   }
 }
