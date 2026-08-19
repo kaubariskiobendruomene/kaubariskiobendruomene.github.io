@@ -1,4 +1,4 @@
-@import url("style-layout.css");
+@import url("style-layout.css?v=20260819-3");
 
 /* Kaubariškinės 2026 – išsami artėjančio renginio kortelė */
 
@@ -16,16 +16,41 @@
   flex: 1 1 auto;
 }
 
-/* „Plačiau“ nuveda į renginių dalį, kur rodoma išsami Kaubariškinių kortelė. */
+/* Išsami Kaubariškinių kortelė su tikru IMG elementu. */
 #kaubariskines-2026 {
+  display: grid;
+  min-height: 0;
+  align-items: start;
+  gap: 8px 30px;
+  padding: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+}
+
+#kaubariskines-2026 > :not(.kaubariskines-poster-button) {
+  grid-column: 1;
+}
+
+#kaubariskines-2026 .kaubariskines-poster-button {
   display: block;
-  min-height: 455px;
-  padding: 24px 330px 24px 24px;
-  background-color: var(--white);
-  background-image: url("images/kaubariskines-2026-skelbimas.webp?v=20260819-2");
-  background-repeat: no-repeat;
-  background-position: right 24px center;
-  background-size: 280px auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  cursor: zoom-in;
+  grid-column: 2;
+  grid-row: 1 / span 10;
+}
+
+#kaubariskines-2026 .kaubariskines-poster-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  border-radius: 16px;
+  object-fit: contain;
+  box-shadow: 0 8px 22px rgba(35, 77, 60, 0.14);
 }
 
 #kaubariskines-2026 .status-badge {
@@ -37,24 +62,24 @@
   margin-top: 12px !important;
 }
 
-@media (max-width: 900px) {
-  #kaubariskines-2026 {
-    min-height: 420px;
-    padding-right: 275px;
-    background-size: 225px auto;
-  }
-}
-
 @media (max-width: 760px) {
   #renginiai {
     scroll-margin-top: 82px;
   }
 
   #kaubariskines-2026 {
-    min-height: 0;
+    display: flex;
+    gap: 0;
     padding: 22px;
-    padding-bottom: min(550px, 142vw);
-    background-position: center bottom 22px;
-    background-size: min(360px, calc(100% - 44px)) auto;
+    flex-direction: column;
+  }
+
+  #kaubariskines-2026 .kaubariskines-poster-button {
+    width: min(100%, 360px);
+    margin: 20px auto 0;
+  }
+
+  #kaubariskines-2026 .kaubariskines-poster-image {
+    max-height: none;
   }
 }
