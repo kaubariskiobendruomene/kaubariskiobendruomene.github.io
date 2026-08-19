@@ -1,4 +1,4 @@
-@import url("style-layout.css?v=20260819-4");
+@import url("style-layout.css?v=20260819-5");
 
 /* Kaubariškinės 2026 – išsami artėjančio renginio kortelė */
 
@@ -62,8 +62,32 @@
   margin-top: 12px !important;
 }
 
+/* Bendruomenės rėmimo / prisidėjimo informacija. */
+#parama {
+  scroll-margin-top: 96px;
+}
+
+#parama .container::before {
+  content: "";
+  display: block;
+  width: min(100%, 720px);
+  aspect-ratio: 4 / 5;
+  margin: 0 auto 34px;
+  border-radius: 22px;
+  background-image: url("images/prisidekime-prie-bendruomenes-veiklos.jpg?v=20260819-5");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-shadow: 0 10px 28px rgba(35, 77, 60, 0.12);
+}
+
+#parama .support-card {
+  margin-top: 0;
+}
+
 @media (max-width: 760px) {
-  #renginiai {
+  #renginiai,
+  #parama {
     scroll-margin-top: 82px;
   }
 
@@ -81,5 +105,12 @@
 
   #kaubariskines-2026 .kaubariskines-poster-image {
     max-height: none;
+  }
+
+  #parama .container::before {
+    width: 100%;
+    margin-bottom: 24px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(35, 77, 60, 0.1);
   }
 }
