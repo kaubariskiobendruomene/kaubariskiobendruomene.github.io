@@ -1,4 +1,4 @@
-@import url("style-layout.css?v=20260819-4");
+@import url("style-layout.css?v=20260819-6");
 
 /* Kaubariškinės 2026 – išsami artėjančio renginio kortelė */
 
@@ -16,7 +16,7 @@
   flex: 1 1 auto;
 }
 
-/* Išsami Kaubariškinių kortelė su tikru IMG elementu. */
+/* Išsami Kaubariškinių kortelė. Plakatas rodomas iš jau esančio WebP failo. */
 #kaubariskines-2026 {
   display: grid;
   min-height: 0;
@@ -33,24 +33,26 @@
 #kaubariskines-2026 .kaubariskines-poster-button {
   display: block;
   width: 100%;
+  aspect-ratio: 1085 / 1536;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 16px;
-  background: transparent;
-  cursor: zoom-in;
+  background-color: transparent;
+  background-image: url("images/kaubariskines-2026-skelbimas.webp?v=20260819-6");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: default;
+  pointer-events: none;
   grid-column: 2;
   grid-row: 1 / span 10;
+  box-shadow: 0 8px 22px rgba(35, 77, 60, 0.14);
 }
 
+/* Paslepiamas ankstesnis neveikiantis JPG elementas. */
 #kaubariskines-2026 .kaubariskines-poster-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 520px;
-  border-radius: 16px;
-  object-fit: contain;
-  box-shadow: 0 8px 22px rgba(35, 77, 60, 0.14);
+  display: none;
 }
 
 #kaubariskines-2026 .status-badge {
@@ -62,8 +64,59 @@
   margin-top: 12px !important;
 }
 
+/* Bendruomenės rėmimo / prisidėjimo informacija visoms veikloms. */
+#parama {
+  scroll-margin-top: 96px;
+}
+
+#parama .container {
+  display: flex;
+  flex-direction: column;
+}
+
+#parama .container::before {
+  content: "Prisidėkime prie Kaubariškio bendruomenės veiklos";
+  order: 1;
+  display: block;
+  width: min(100%, 900px);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 24px 30px;
+  border-radius: 22px 22px 0 0;
+  background: #245b49;
+  color: #ffffff;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+#parama .container::after {
+  content: "Kaubariškio bendruomenė nuolat organizuoja renginius, veiklas vaikams ir suaugusiesiems, bendruomenines iniciatyvas bei kitus susitikimus.\A\A Visa tai kuriame savo jėgomis, todėl kviečiame prisidėti gyventojus, verslus ir visus, kurie nori padėti stiprinti mūsų bendruomenę.\A\A Prisidėti galima ne tik finansiškai. Bendruomenei įvairioms veikloms praverstų:\A • popierius ir spausdinimo paslaugos;\A • kanceliarinės ir kūrybinės priemonės;\A • simbolinės dovanos ir prizai vaikams;\A • saldumynai, vanduo ar kitos renginiams tinkamos prekės;\A • įvairios paslaugos, priemonės ar kita pagalba, kuri galėtų būti naudinga bendruomenės veiklose.\A\A NORINTYS PRISIDĖTI FINANSIŠKAI GALI PERVESTI LĖŠAS:\A Kaubariškio bendruomenė\A Sąskaita: LT77 7300 0101 9099 0409\A Mokėjimo paskirtis: Parama bendruomenės veiklai\A\A Norintys prisidėti prekėmis, paslaugomis ar kitu būdu kviečiami susisiekti su Kaubariškio bendruomene.\A\A Kiekvienas prisidėjimas padeda mums organizuoti daugiau veiklų, kurti jaukesnius renginius ir stiprinti bendrystę. Ačiū visiems, kurie prisideda. 💚";
+  order: 2;
+  display: block;
+  width: min(100%, 900px);
+  box-sizing: border-box;
+  margin: 0 auto 34px;
+  padding: 28px 30px 30px;
+  border: 1px solid #d8c28a;
+  border-top: 0;
+  border-radius: 0 0 22px 22px;
+  background: #faf8f2;
+  color: #303531;
+  white-space: pre-line;
+  font-size: 1rem;
+  line-height: 1.65;
+  box-shadow: 0 10px 28px rgba(35, 77, 60, 0.1);
+}
+
+#parama .support-card {
+  order: 3;
+  margin-top: 0;
+}
+
 @media (max-width: 760px) {
-  #renginiai {
+  #renginiai,
+  #parama {
     scroll-margin-top: 82px;
   }
 
@@ -79,7 +132,17 @@
     margin: 20px auto 0;
   }
 
-  #kaubariskines-2026 .kaubariskines-poster-image {
-    max-height: none;
+  #parama .container::before {
+    padding: 20px 22px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  #parama .container::after {
+    margin-bottom: 24px;
+    padding: 22px;
+    border-radius: 0 0 16px 16px;
+    font-size: 0.96rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
   }
 }
