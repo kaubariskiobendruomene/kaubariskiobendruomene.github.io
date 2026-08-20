@@ -1,4 +1,5 @@
-@import url("style-layout.css?v=20260819-6");
+/* GitHub Pages rebuild: 2026-08-20 */
+@import url("style-layout.css?v=20260820-1");
 
 /* Kaubariškinės 2026 – išsami artėjančio renginio kortelė */
 
@@ -39,7 +40,7 @@
   border: 0;
   border-radius: 16px;
   background-color: transparent;
-  background-image: url("images/kaubariskines-2026-skelbimas.webp?v=20260819-6");
+  background-image: url("images/kaubariskines-2026-skelbimas.webp?v=20260820-1");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
