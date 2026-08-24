@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b4a2b">
+<meta name="robots" content="noindex,nofollow">
+<title>Kaip veikiame kartu? – savirefleksijos priemonė</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="shell">
+<section id="intro" class="screen active">
+  <div class="card hero">
+    <span class="eyebrow">Bendruomenės savirefleksijos priemonė</span>
+    <h1>Kaip veikiame kartu?</h1>
+    <p class="lead">15 realių bendruomenės situacijų, padedančių pasižiūrėti į savo pasirenkamus veikimo būdus.</p>
+    <div class="notice">
+      <strong>Tai nėra egzaminas ir ne žmogaus vertinimas.</strong>
+      <p>Kiekvienoje situacijoje pažymėk visus variantus, kurie, tavo manymu, būtų tinkami. Tinkamų variantų gali būti <strong>1, 2 arba 3</strong>.</p>
+    </div>
+    <div class="privacy"><span>🔒</span><div><strong>Privatu</strong><p>Tavo atsakymai niekur nesiunčiami ir nesaugomi. Rezultatą matai tik tu šiame įrenginyje.</p></div></div>
+    <div class="scoring-info"><strong>Kaip skaičiuojama?</strong><p>Už kiekvieną situaciją gali gauti 0–4 taškus. Balas kyla, kai pažymi šios priemonės principus atitinkančius variantus, ir mažėja, jei pažymi jiems prieštaraujančius. Todėl pažymėti visų variantų „dėl visa ko“ neapsimoka.</p></div>
+    <button id="startBtn" class="btn primary">Pradėti savirefleksiją</button>
+    <div class="version">V2 · patikrinta 15 situacijų versija</div>
+  </div>
+</section>
+
+<section id="quiz" class="screen">
+  <div class="topline"><button id="backBtn" class="btn ghost">← Atgal</button><span id="progressLabel"></span></div>
+  <div class="progress"><div id="progressBar"></div></div>
+  <article class="card question-card">
+    <div id="questionNumber" class="question-number"></div>
+    <h2 id="questionTitle"></h2>
+    <p id="questionSituation" class="situation"></p>
+    <p class="instruction">Pažymėk visus tinkamus variantus.<small>Gali būti 1, 2 arba 3 tinkami pasirinkimai.</small></p>
+    <div id="options" class="options"></div>
+    <p id="questionError" class="error"></p>
+    <button id="nextBtn" class="btn primary wide">Tęsti →</button>
+  </article>
+</section>
+
+<section id="results" class="screen">
+  <div class="card results-head">
+    <span class="eyebrow">Tavo rezultatas</span>
+    <h1>Kaip veikiame kartu?</h1>
+    <div class="score-circle"><span id="totalScore">0</span><small>/60</small></div>
+    <h2 id="overallTitle"></h2>
+    <p id="overallText" class="result-summary"></p>
+    <p class="result-note">Šis rezultatas parodo tik tavo pasirinkimus šiame teste. Jis nenustato tavo asmenybės, gebėjimų ar vertės. Tikrasis iššūkis – kaip šiuos principus pritaikome realioje įtampoje, nuovargyje ar konflikte.</p>
+  </div>
+  <div id="categoryResults" class="category-grid"></div>
+  <div class="reflection-box"><h2>Klausimas sau</h2><p id="reflectionPrompt"></p></div>
+  <div class="actions"><button id="reviewBtn" class="btn secondary">Peržiūrėti savo pasirinkimus</button><button id="restartBtn" class="btn ghost">Pradėti iš naujo</button></div>
+</section>
+
+<section id="review" class="screen">
+  <div class="card review-head">
+    <button id="resultsBackBtn" class="btn ghost">← Į rezultatus</button>
+    <span class="eyebrow">Atsakymų peržiūra</span>
+    <h1>Tavo pasirinkimai</h1>
+    <p>Čia nėra „gero“ ar „blogo“ žmogaus atsakymų. Gali pasižiūrėti, kur tavo pasirinkimai sutapo su šios priemonės principais, o kur verta apsvarstyti kitą perspektyvą.</p>
+  </div>
+  <div id="reviewList" class="review-list"></div>
+</section>
+</main>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
